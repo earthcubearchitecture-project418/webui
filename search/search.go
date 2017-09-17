@@ -52,7 +52,7 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	queryterm = strings.TrimSpace(queryterm) // remove leading and trailing white spaces a user might put in (not internal spaces though)
 
 	// Make a var in case I want other templates I switch to later...
-	templateFile := "./templates/rwg.html"
+	templateFile := "./templates/indextemplate.html"
 
 	// parse the queryterm to get the colon based qualifiers
 	qstring := parse(queryterm)
