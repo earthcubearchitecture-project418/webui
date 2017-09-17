@@ -14,6 +14,8 @@ import (
 	"github.com/blevesearch/bleve"
 )
 
+// FreeTextResults is the exported struct holding the
+// results of the Bleve search
 type FreeTextResults struct {
 	Place           int
 	Index           string
@@ -24,17 +26,20 @@ type FreeTextResults struct {
 	IconDescription string
 }
 
+// Fragment holds the matched text fragment strings
 type Fragment struct {
 	Key   string
 	Value string //[]string
 }
 
-type SearchMetaData struct {
+// ResultsMetaData holds some information about the search results
+type ResultsMetaData struct {
 	Term    string
 	Count   int
 	Message string
 }
 
+// Qstring holds the query and modifers for the query
 type Qstring struct {
 	Query      string
 	Qualifiers map[string]string
@@ -83,7 +88,7 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	// Set up some metadata on the search results to return
-	var searchmeta SearchMetaData
+	var searchmeta ResultsMetaData
 	searchmeta.Term = queryterm // We don't use qstring.Query here since we want the full string including qualifiers, returned to the page for rendering with results
 	searchmeta.Count = qrl
 	if qrl == 0 {
@@ -130,8 +135,8 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 }
 
 func parse(qstring string) Qstring {
-	re_inside_whtsp := regexp.MustCompile(`[\s\p{Zs}]{2,}`) // get rid of multiple spaces
-	qstring = re_inside_whtsp.ReplaceAllString(qstring, " ")
+	reInsideWhtsp := regexp.MustCompile(`[\s\p{Zs}]{2,}`) // get rid of multiple spaces
+	qstring = reInsideWhtsp.ReplaceAllString(qstring, " ")
 	sa := strings.Split(qstring, " ")
 
 	var buffer bytes.Buffer
@@ -154,7 +159,7 @@ func parse(qstring string) Qstring {
 func termReWrite(phrase string, distanceAppend string) string {
 	terms := strings.Split(phrase, " ")
 
-	for k, _ := range terms {
+	for k := range terms {
 		var str bytes.Buffer
 		str.WriteString(strings.TrimSpace(terms[k]))
 		str.WriteString(distanceAppend)
