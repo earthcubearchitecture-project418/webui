@@ -15,7 +15,8 @@ type MyServer struct {
 
 func main() {
 	searchroute := mux.NewRouter()
-	searchroute.HandleFunc("/", search.DoSearch)
+	searchroute.HandleFunc("/", search.HoldingPage) // temporary handler for this URL
+	// searchroute.HandleFunc("/", search.DoSearch)  // the REAL handler for this URL
 	http.Handle("/", searchroute)
 
 	imageRouter := mux.NewRouter()

@@ -45,6 +45,23 @@ type Qstring struct {
 	Qualifiers map[string]string
 }
 
+// HoldingPage is a simple handler used before we were ready to expose
+// the search systems.  Once operational we should remove or at least comment
+// out this function.
+func HoldingPage(w http.ResponseWriter, r *http.Request) {
+	templateFile := "./templates/holdingtemplate.html"
+
+	ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
+	if err != nil {
+		log.Printf("template parse failed: %s", err)
+	}
+
+	err = ht.ExecuteTemplate(w, "Q", nil) //substitute fields in the template 't', with values from 'user' and write it out to 'w' which implements io.Writer
+	if err != nil {
+		log.Printf("Template execution failed: %s", err)
+	}
+}
+
 // DoSearch is there to do searching..  (famous documentation style intact!)
 func DoSearch(w http.ResponseWriter, r *http.Request) {
 	log.Printf("r path: %s\n", r.URL.Query()) // need to log this better so I can filter out search terms later
