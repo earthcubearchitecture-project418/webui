@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// MyServer struct for mux router
 type MyServer struct {
 	r *mux.Router
 }
@@ -34,6 +35,7 @@ func main() {
 	log.Printf("About to listen on 9900. Go to http://127.0.0.1:9900/")
 
 	err := http.ListenAndServe(":9900", nil)
+	// http 2.0 http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
