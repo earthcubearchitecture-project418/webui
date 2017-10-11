@@ -10,6 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>EarthCube CDF RWG</title>
 
+    <!-- use hack font -->
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
+
+
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="images/android-desktop.png">
@@ -107,6 +111,16 @@
             document.getElementById("formcall").submit(); // Form submission
         }
     </script>
+    <style>
+        .centerdiv {
+            width: 50%;
+            margin: 0 auto;
+        }
+        
+        BODY {
+            font-family: Hack, monospace;
+        }
+    </style>
 
 </head>
 
@@ -134,18 +148,22 @@
             <!-- Bottom row, not visible on scroll -->
             <div class="mdl-layout__header-row">
                 <div class="mdl-layout-spacer"></div>
+
                 <!-- Navigation -->
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" target="_blank" href="#">About</a>
-                   
+
+                    <a class="mdl-navigation__link" href="/">Search</a>
+                    <a class="mdl-navigation__link" href="/html/about.html">About</a>
+
                 </nav>
             </div>
         </header>
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">Project 418</span>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" target="_blank" href="#">About</a>
-               
+                <a class="mdl-navigation__link" href="/">Search</a>
+                <a class="mdl-navigation__link" href="/html/about.html">About</a>
+
             </nav>
         </div>
         <main class="mdl-layout__content">
@@ -160,7 +178,15 @@
                                 <!-- <a href="javascript: submitform()">Search</a> -->
                             </div>
                         </form>
-                        {{if .Count}} Found: {{.Count}} {{end}} {{if .Message}} {{.Message}} {{end}}
+
+                        <a href="./?q={{.Term}}&start={{.PrevStart}}"> <i style="font-size:18px" class="material-icons">chevron_left</i></a>
+
+                        {{if .Count}} {{.StartAt}} - {{.EndAt}} of {{.Count}} {{end}} {{if .Message}} {{.Message}} {{end}}
+
+                        <a href="./?q={{.Term}}&start={{.NextStart}}"> <i style="font-size:18px" class="material-icons">chevron_right</i></a>
+
+
+
                     </div>
                 </div>
 
@@ -172,22 +198,20 @@
                         {{range $loop := .}}
                         <div class="mdl-card" style="width:100%;margin-bottom:40px">
                             <div class="mdl-card__title">
-                                <h3 class="mdl-card__title-text"><a target="_blank" href="{{$loop.ID}}">{{$loop.ID}}</a> </h3>
-                            </div>
-                            <div class="mdl-card__media" style="margin:5px">
-                                <!--<img src="/images/eclogo.png" width="50" border="0" alt="" style="padding:10px;">-->
-                                <i style="font-size:48px" class="material-icons">{{$loop.IconName}}</i> {{$loop.IconDescription}}: {{$loop.Index}}
+                                <i style="font-size:36px" class="material-icons">{{$loop.IconName}}</i>
 
+                                <h4 class="mdl-card__title-text"><a target="_blank" href="{{$loop.ID}}">{{$loop.ID}}</a> </h4>
                             </div>
-                            <div class="mdl-card__supporting-text">
-                                Position {{$loop.Place}} with score {{$loop.Score}}
+                            <div class="mdl-card__media">
+                                <p style="margin-left:18px;font-size:16px"> {{$loop.IconDescription}}
+                                    <span style="margin-left:16px;font-size:10px"> Score: {{$loop.Score}} </span></p>
+                            </div>
+                            <div style="margin:5px" class="mdl-card__supporting-text">
                                 <ul>
                                     {{range $loop2 := $loop.Fragments}}
-                                    <li>{{$loop2.Key}} : {{$loop2.Value}}</li>
+                                    <li>{{$loop2.Key}} : {{range $loop3 := $loop2.Value}} {{$loop3}} {{end}} </li>
                                     {{end}}
                                 </ul>
-                            </div>
-                            <div class="mdl-card__actions">
                             </div>
                         </div>
                         {{end}} {{end}} {{define "S"}}

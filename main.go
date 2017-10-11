@@ -16,20 +16,20 @@ type MyServer struct {
 
 func main() {
 	searchroute := mux.NewRouter()
-	searchroute.HandleFunc("/", search.HoldingPage) // temporary handler for this URL
-	// searchroute.HandleFunc("/", search.DoSearch)  // the REAL handler for this URL
+	// searchroute.HandleFunc("/", search.HoldingPage) // temporary handler for this URL
+	searchroute.HandleFunc("/", search.DoSearch) // the REAL handler for this URL
 	http.Handle("/", searchroute)
 
 	imageRouter := mux.NewRouter()
-	imageRouter.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("./images"))))
+	imageRouter.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("./static/images"))))
 	http.Handle("/images/", &MyServer{imageRouter})
 
 	cssRouter := mux.NewRouter()
-	cssRouter.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("./css"))))
+	cssRouter.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))
 	http.Handle("/css/", &MyServer{cssRouter})
 
 	htmlRouter := mux.NewRouter()
-	htmlRouter.PathPrefix("/html/").Handler(http.StripPrefix("/html/", http.FileServer(http.Dir("./html"))))
+	htmlRouter.PathPrefix("/html/").Handler(http.StripPrefix("/html/", http.FileServer(http.Dir("./static/html"))))
 	http.Handle("/html/", &MyServer{htmlRouter})
 
 	log.Printf("About to listen on 9900. Go to http://127.0.0.1:9900/")

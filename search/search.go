@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -29,14 +30,18 @@ type FreeTextResults struct {
 // Fragment holds the matched text fragment strings
 type Fragment struct {
 	Key   string
-	Value string //[]string
+	Value []string //[]string
 }
 
 // ResultsMetaData holds some information about the search results
 type ResultsMetaData struct {
-	Term    string
-	Count   int
-	Message string
+	Term      string
+	Count     uint64
+	StartAt   uint64
+	EndAt     uint64
+	NextStart uint64
+	PrevStart uint64
+	Message   string
 }
 
 // Qstring holds the query and modifers for the query
@@ -68,15 +73,20 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	queryterm := r.URL.Query().Get("q")
 	queryterm = strings.TrimSpace(queryterm) // remove leading and trailing white spaces a user might put in (not internal spaces though)
 
+	// get the start at value or set to 0
+	var startAt uint64
+	startAt = 0
+	if s, err := strconv.Atoi(r.URL.Query().Get("start")); err == nil {
+		startAt = uint64(s)
+	}
+
 	// Make a var in case I want other templates I switch to later...
 	templateFile := "./templates/indextemplate.html"
 
 	// parse the queryterm to get the colon based qualifiers
 	qstring := parse(queryterm)
-
-	// var queryResults DocumentMatchCollection{}
 	distance := ""
-	queryResults := indexCall(qstring, distance)
+	queryResults, sr := indexCall(qstring, startAt, distance)
 	qrl := len(queryResults)
 
 	// moved the len test and string mod to here
@@ -88,7 +98,7 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	if qrl == 0 {
 		if strings.Contains(distance, "") {
 			fmt.Println("Call ~1")
-			queryResults = indexCall(qstring, "~1")
+			queryResults, _ = indexCall(qstring, startAt, "~1")
 		}
 	}
 	qrl = len(queryResults)
@@ -96,7 +106,7 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	if qrl == 0 {
 		if strings.Contains(distance, "~1") {
 			fmt.Println("Call ~2")
-			queryResults = indexCall(qstring, "~2")
+			queryResults, _ = indexCall(qstring, startAt, "~2")
 		}
 	}
 
@@ -107,7 +117,11 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	// Set up some metadata on the search results to return
 	var searchmeta ResultsMetaData
 	searchmeta.Term = queryterm // We don't use qstring.Query here since we want the full string including qualifiers, returned to the page for rendering with results
-	searchmeta.Count = qrl
+	searchmeta.Count = sr.Total
+	searchmeta.StartAt = startAt
+	searchmeta.EndAt = startAt + 20 // TODO make this a var..   do not set statis!!!!!!
+	searchmeta.NextStart = searchmeta.EndAt + 1
+	searchmeta.PrevStart = searchmeta.StartAt - 20
 	if qrl == 0 {
 		if qstring.Query == "" {
 			searchmeta.Message = "Search EarthCube CDF RWG demo index"
@@ -188,48 +202,81 @@ func termReWrite(phrase string, distanceAppend string) string {
 }
 
 // return JSON string..  enables use of func for REST call too
-func indexCall(qstruct Qstring, distance string) []FreeTextResults {
+// return JSON string..  enables use of func for REST call too
+func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResults, *bleve.SearchResult) {
 	if qstruct.Query == "" {
-		return nil
+		return nil, nil
 	}
+
+	// TODO ..  improve this..
+	// Really need to check if it is ~1 or ~2.  If not, set to empty
+	// if distance == "" {
+	// 	distance = ""
+	// }
 
 	// Playing with index aliases
 	// Open all indexes in an alias and use this in a named call
 	log.Printf("Start building Codex index \n")
 
-	index1, err := bleve.OpenUsing("./index/rwg.bleve", map[string]interface{}{
+	index1, err := bleve.OpenUsing("indexes/abstracts.bleve", map[string]interface{}{
 		"read_only": true,
 	})
 	if err != nil {
-		log.Printf("Error with index alias: %v", err)
+		log.Printf("Error with index1 alias: %v", err)
 	}
-	index2, err := bleve.OpenUsing("./index/rwgdata.bleve", map[string]interface{}{
+	index2, err := bleve.OpenUsing("indexes/rwg.bleve", map[string]interface{}{
 		"read_only": true,
 	})
 	if err != nil {
-		log.Printf("Error with index alias: %v", err)
+		log.Printf("Error with index2 alias: %v", err)
+	}
+	index3, err := bleve.OpenUsing("indexes/janus.bleve", map[string]interface{}{
+		"read_only": true,
+	})
+	if err != nil {
+		log.Printf("Error with index3 alias: %v", err)
 	}
 
 	var index bleve.IndexAlias
 
-	if strings.Contains(qstruct.Qualifiers["type"], "organization") {
-		index = bleve.NewIndexAlias(index1)
-	} else if strings.Contains(qstruct.Qualifiers["type"], "data") {
-		index = bleve.NewIndexAlias(index2)
+	if _, ok := qstruct.Qualifiers["type"]; ok {
+		//  TODO..  system needs to handle accepting N number type: qualifiers like type:jrso,csdco
+		if strings.Contains(qstruct.Qualifiers["type"], "abstracts") {
+			index = bleve.NewIndexAlias(index1)
+			log.Println("Active index: 1")
+		}
+		if strings.Contains(qstruct.Qualifiers["type"], "csdco") {
+			index = bleve.NewIndexAlias(index2)
+			log.Println("Active index: 2")
+		}
+		if strings.Contains(qstruct.Qualifiers["type"], "jrso") {
+			index = bleve.NewIndexAlias(index3)
+			log.Println("Active index: 3")
+		}
 	} else {
-		index = bleve.NewIndexAlias(index1, index2)
+		// index = bleve.NewIndexAlias(index1, index2, index3)
+		// log.Println("Active index: 1,2,3")
+		index = bleve.NewIndexAlias(index2, index3) // just use rwg and janus for now in P418
+		log.Println("Active index: 2,3")
 	}
 
 	log.Printf("Codex index built\n")
 
 	// parse string and add ~2 to each term/word, then rebuild as a string.
+	fmt.Printf("Ready to search with %s and distance: %s \n", qstruct.Query, distance)
 	query := bleve.NewQueryStringQuery(termReWrite(qstruct.Query, distance))
-	search := bleve.NewSearchRequestOptions(query, 100, 0, false) // no explanation
-	search.Highlight = bleve.NewHighlight()                       // need Stored and IncludeTermVectors in index
-	searchResults, err := index.Search(search)
-	// index.Close()  // null index bug test..  didn't work
+	search := bleve.NewSearchRequestOptions(query, 20, int(startAt), false) // no explanation
 
-	// TODO  make var hits, check for nil and do nothing when nil....
+	// TODO  Add facet aspect  ref: http://www.blevesearch.com/docs/Result-Faceting/
+	termFacet := bleve.NewFacetRequest("opencore:params.Pname", 5)
+	search.AddFacet("terms", termFacet)
+
+	search.Highlight = bleve.NewHighlightWithStyle("html") // need Stored and IncludeTermVectors in index
+	searchResults, err := index.Search(search)
+	if err != nil {
+		log.Printf("Error search results: %v", err)
+	}
+
 	hits := searchResults.Hits // array of struct DocumentMatch
 
 	var results []FreeTextResults
@@ -240,24 +287,41 @@ func indexCall(qstruct Qstring, distance string) []FreeTextResults {
 		var frags []Fragment
 		for key, frag := range item.Fragments {
 			// fmt.Printf("%s   %s\n", key, frag)
-			frags = append(frags, Fragment{key, frag[0]})
+			frags = append(frags, Fragment{key, frag})
 		}
 
 		// set up a material icon   ref:  https://material.io/icons/
 		var iconName string
 		var iconDescription string
-		if item.Index == "./index/rwgdata.bleve" {
-			iconName = "file_download"                                  // material design icon name used in template
-			iconDescription = "Data resource of type data landing page" // material design icon name used in template
+		if strings.Contains(item.Index, "janus") {
+			iconName = "file_download"                 // material design icon name used in template
+			iconDescription = "JRSO Data landing page" // material design icon name used in template
 		}
-		if item.Index == "./index/rwg.bleve" {
-			iconName = "http"                                                  // material design icon name used in template  alts:  web_asset or web
-			iconDescription = "Organization or other related on-line resource" // material design icon name used in template  alts:  web_asset or web
+		if strings.Contains(item.Index, "csdco") {
+			iconName = "file_download"                  // material design icon name used in template
+			iconDescription = "CSDCO Data landing page" // material design icon name used in template
+		}
+		if strings.Contains(item.Index, "abstracts") {
+			iconName = "http"                  // material design icon name used in template  alts:  web_asset or web
+			iconDescription = "CSDCO Abstract" // material design icon name used in template  alts:  web_asset or web
+		}
+		if strings.Contains(item.Index, "rwg") {
+			iconName = "http"                 // material design icon name used in template  alts:  web_asset or web
+			iconDescription = "EarthCube CDF" // material design icon name used in template  alts:  web_asset or web
 		}
 
 		results = append(results, FreeTextResults{k, item.Index, item.Score, item.ID, frags, iconName, iconDescription})
 	}
 
-	fmt.Printf("Looping status count:%d, distance:%s\n", len(results), distance)
-	return results // finalResults
+	//  Looking at the JSON a bit to see about using typescript and stencil to
+	// display results from the pure JSON (call via AJAX)
+	// fmt.Printf("Looping status count:%d, distance:%s\n", len(results), distance)
+	// json, _ := json.MarshalIndent(searchResults, "", " ")
+	// fmt.Print(string(json))
+
+	index.Close()
+	return results, searchResults
 }
+
+// TODO
+// need a stop words function for us with words like: "data"  in it  :)
