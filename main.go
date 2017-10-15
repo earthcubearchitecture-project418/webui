@@ -20,6 +20,13 @@ func main() {
 	searchroute.HandleFunc("/", search.DoSearch) // the REAL handler for this URL
 	http.Handle("/", searchroute)
 
+	// THIS IS CRAP.. .  fix this...
+	// A one off route for robots...  need to fix this code so the search route is only take when
+	// there is a ?q= match...  and all static files addressed by ONE router
+	// robotRouter := mux.NewRouter()
+	// robotRouter.Path("/robots.txt").Handler(http.ServeFile(http.Dir("./static")))
+	// http.Handle("/robots.txt", &MyServer{robotRouter})
+
 	imageRouter := mux.NewRouter()
 	imageRouter.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("./static/images"))))
 	http.Handle("/images/", &MyServer{imageRouter})

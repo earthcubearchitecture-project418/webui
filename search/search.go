@@ -123,11 +123,11 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	searchmeta.NextStart = searchmeta.EndAt + 1
 	searchmeta.PrevStart = searchmeta.StartAt - 20
 	if qrl == 0 {
-		if qstring.Query == "" {
-			searchmeta.Message = "Search EarthCube CDF RWG demo index"
+		if queryterm == "" {
+			searchmeta.Message = "P418 Search Test"
 
 		} else {
-			searchmeta.Message = "No results found for this search"
+			searchmeta.Message = "Search results empty"
 		}
 	}
 
@@ -288,6 +288,10 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 		for key, frag := range item.Fragments {
 			// fmt.Printf("%s   %s\n", key, frag)
 			frags = append(frags, Fragment{key, frag})
+		}
+
+		for k, v := range item.Fields {
+			fmt.Printf("Field %v. Value %v.\n", k, v)
 		}
 
 		// set up a material icon   ref:  https://material.io/icons/

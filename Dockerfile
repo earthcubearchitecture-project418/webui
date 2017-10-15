@@ -1,6 +1,6 @@
 # Start from scratch image and add in a precompiled binary
-# docker build  --tag="opencoredata/ocdweb:0.1"  .
-# docker run -d -p 9900:9900  opencoredata/ocdweb:0.1
+# docker build -t earthcube/p418webui:latest -t earthcube/p418webui:0.0.1 .
+# docker run -d -p 9900:9900  opencoredata/ocdweb:0.0.1
 FROM scratch
 
 # Add in the static elements (could also mount these from local filesystem)
@@ -11,8 +11,8 @@ ADD ./static /static
 # do this as a data mount now.. indexes are large
 # ADD ./indexes  /indexes 
 
-
 # Add our binary
+# CGO_ENABLED=0 env GOOS=linux go build .
 CMD ["/webui"]
 
 # Document that the service listens on this port
