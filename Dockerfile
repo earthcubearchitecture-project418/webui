@@ -1,5 +1,5 @@
 # Start from scratch image and add in a precompiled binary
-# docker build -t earthcube/p418webui:latest -t earthcube/p418webui:0.0.1 .
+# docker build -t earthcube/p418webui:latest -t earthcube/p418webui:0.0.4 .
 # docker run -d -p 9900:9900  opencoredata/ocdweb:0.0.1
 FROM scratch
 

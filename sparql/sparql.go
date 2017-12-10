@@ -3,6 +3,7 @@ package sparql
 import (
 	"bytes"
 	"log"
+	"time"
 
 	"github.com/knakk/sparql"
 )
@@ -35,6 +36,20 @@ WHERE {
   }
 }
 LIMIT 1
+
+# tag: genDescribe
+PREFIX schemaorg: <http://schema.org/> 
+DESCRIBE *
+WHERE { 
+	<{{.URL}}>  ?p ?o .
+  }
+
+# tag: description
+PREFIX schemaorg: <http://schema.org/> 
+SELECT ?description
+WHERE { 
+    <{{.URL}}> schemaorg:description ?description .
+}
 
 # tag: generalInfo
 	   SELECT DISTINCT *
@@ -84,22 +99,72 @@ type SPres struct {
 	ContactRole  string
 }
 
+// connector function for the local sparql instance
+func getLocalSPARQL() (*sparql.Repo, error) {
+	repo, err := sparql.NewRepo("http://geodex.org/blazegraph/namespace/kb/sparql",
+		sparql.Timeout(time.Millisecond*15000),
+	)
+	if err != nil {
+		log.Printf("%s\n", err)
+	}
+	return repo, err
+}
+
+func getQuery(tag string) (string, error) {
+	f := bytes.NewBufferString(queries)
+	bank := sparql.LoadBank(f)
+	q, err := bank.Prepare(tag)
+	if err != nil {
+		log.Printf("%s\n", err)
+	}
+	return q, err
+}
+
+func DescriptionCall(url string) (string, error) {
+
+	repo, err := getLocalSPARQL()
+
+	f := bytes.NewBufferString(queries)
+	bank := sparql.LoadBank(f)
+
+	q, err := bank.Prepare("description", struct{ URL string }{url})
+	if err != nil {
+		log.Printf("%s\n", err)
+	}
+
+	res, err := repo.Query(q)
+	if err != nil {
+		log.Printf("query call: %v\n", err)
+		return "", err
+	}
+
+	bindingsTest2 := res.Bindings() // map[string][]rdf.Term
+	log.Printf("Binding Test %s ", bindingsTest2)
+
+	// This whole aspect seems verbose... there has to be a better Go way to do this check?
+	description := "No description available"
+	if len(bindingsTest2) > 0 {
+		if len(bindingsTest2["description"]) > 0 {
+			description = bindingsTest2["description"][0].String()
+		}
+
+	}
+
+	return description, err
+}
+
 // SPARQLCall calls triple store and returns results
 func DoCall(url string) (SPres, error) {
 	data := SPres{}
-	repo, err := sparql.NewRepo("http://rwgsparql:9999/blazegraph/namespace/ecrwg/sparql")
-	if err != nil {
-		log.Printf("query make repo: %v\n", err)
-		return data, err
-	}
+
+	repo, err := getLocalSPARQL()
 
 	f := bytes.NewBufferString(queries)
 	bank := sparql.LoadBank(f)
 
 	q, err := bank.Prepare("orgInfo", struct{ URL string }{url})
 	if err != nil {
-		log.Printf("query bank prepair: %v\n", err)
-		return data, err
+		log.Printf("%s\n", err)
 	}
 
 	res, err := repo.Query(q)
@@ -109,9 +174,10 @@ func DoCall(url string) (SPres, error) {
 	}
 
 	bindingsTest2 := res.Bindings() // map[string][]rdf.Term
+	log.Println(bindingsTest2)
 
 	// This whole aspect seems verbose... there has to be a better Go way to do this check?
-	data.Description = "No description provided by facility"
+	data.Description = ""
 	if len(bindingsTest2) > 0 {
 		data.Repository = bindingsTest2["repository"][0].String()
 		if len(bindingsTest2["description"]) > 0 {

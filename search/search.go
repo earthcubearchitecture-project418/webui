@@ -13,6 +13,7 @@ import (
 	"earthcube.org/Project418/webui/sparql"
 
 	"github.com/blevesearch/bleve"
+	strip "github.com/grokify/html-strip-tags-go"
 )
 
 // FreeTextResults is the exported struct holding the
@@ -25,6 +26,7 @@ type FreeTextResults struct {
 	Fragments       []Fragment
 	IconName        string
 	IconDescription string
+	Description     string
 }
 
 // Fragment holds the matched text fragment strings
@@ -98,15 +100,21 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 	if qrl == 0 {
 		if strings.Contains(distance, "") {
 			fmt.Println("Call ~1")
-			queryResults, _ = indexCall(qstring, startAt, "~1")
+			queryResults, err := indexCall(qstring, startAt, "~1")
+			qrl = len(queryResults)
+			if err != nil {
+				log.Print(err)
+			}
 		}
 	}
-	qrl = len(queryResults)
-
 	if qrl == 0 {
 		if strings.Contains(distance, "~1") {
 			fmt.Println("Call ~2")
-			queryResults, _ = indexCall(qstring, startAt, "~2")
+			queryResults, err := indexCall(qstring, startAt, "~2")
+			qrl = len(queryResults)
+			if err != nil {
+				log.Print(err)
+			}
 		}
 	}
 
@@ -201,6 +209,8 @@ func termReWrite(phrase string, distanceAppend string) string {
 	return strings.Join(terms, " ")
 }
 
+// TODO  TLDR;   stop being lazy and using copy and paste!!!!!!!
+// TODO   This a LOT of hideous duplicate code..  need to apply some logic here and reduce the line count!!!!!!!
 // return JSON string..  enables use of func for REST call too
 // return JSON string..  enables use of func for REST call too
 func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResults, *bleve.SearchResult) {
@@ -218,46 +228,66 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 	// Open all indexes in an alias and use this in a named call
 	log.Printf("Start building Codex index \n")
 
-	index1, err := bleve.OpenUsing("indexes/abstracts.bleve", map[string]interface{}{
+	index1, err := bleve.OpenUsing("indexes/bcodmo.bleve", map[string]interface{}{
 		"read_only": true,
 	})
 	if err != nil {
 		log.Printf("Error with index1 alias: %v", err)
 	}
-	index2, err := bleve.OpenUsing("indexes/rwg.bleve", map[string]interface{}{
+	index2, err := bleve.OpenUsing("indexes/linkedearth.bleve", map[string]interface{}{
 		"read_only": true,
 	})
 	if err != nil {
 		log.Printf("Error with index2 alias: %v", err)
 	}
-	index3, err := bleve.OpenUsing("indexes/janus.bleve", map[string]interface{}{
+	index3, err := bleve.OpenUsing("indexes/ocd.bleve", map[string]interface{}{
 		"read_only": true,
 	})
 	if err != nil {
 		log.Printf("Error with index3 alias: %v", err)
 	}
+	index4, err := bleve.OpenUsing("indexes/csdco.bleve", map[string]interface{}{
+		"read_only": true,
+	})
+	if err != nil {
+		log.Printf("Error with index4 alias: %v", err)
+	}
+	index5, err := bleve.OpenUsing("indexes/rwg.bleve", map[string]interface{}{
+		"read_only": true,
+	})
+	if err != nil {
+		log.Printf("Error with index5 alias: %v", err)
+	}
 
 	var index bleve.IndexAlias
 
-	if _, ok := qstruct.Qualifiers["type"]; ok {
+	if _, ok := qstruct.Qualifiers["source"]; ok {
 		//  TODO..  system needs to handle accepting N number type: qualifiers like type:jrso,csdco
-		if strings.Contains(qstruct.Qualifiers["type"], "abstracts") {
+		if strings.Contains(qstruct.Qualifiers["source"], "bco-dmo") {
 			index = bleve.NewIndexAlias(index1)
 			log.Println("Active index: 1")
 		}
-		if strings.Contains(qstruct.Qualifiers["type"], "csdco") {
+		if strings.Contains(qstruct.Qualifiers["source"], "linkedearth") {
 			index = bleve.NewIndexAlias(index2)
 			log.Println("Active index: 2")
 		}
-		if strings.Contains(qstruct.Qualifiers["type"], "jrso") {
+		if strings.Contains(qstruct.Qualifiers["source"], "opencore") {
 			index = bleve.NewIndexAlias(index3)
 			log.Println("Active index: 3")
+		}
+		if strings.Contains(qstruct.Qualifiers["source"], "csdco") {
+			index = bleve.NewIndexAlias(index4)
+			log.Println("Active index: 4")
+		}
+		if strings.Contains(qstruct.Qualifiers["source"], "rwg") {
+			index = bleve.NewIndexAlias(index5)
+			log.Println("Active index: 5")
 		}
 	} else {
 		// index = bleve.NewIndexAlias(index1, index2, index3)
 		// log.Println("Active index: 1,2,3")
-		index = bleve.NewIndexAlias(index2, index3) // just use rwg and janus for now in P418
-		log.Println("Active index: 2,3")
+		index = bleve.NewIndexAlias(index1, index2, index3, index4, index5) // just use rwg and janus for now in P418
+		log.Println("Active index: 1,2,3,4,5")
 	}
 
 	log.Printf("Codex index built\n")
@@ -268,13 +298,13 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 	search := bleve.NewSearchRequestOptions(query, 20, int(startAt), false) // no explanation
 
 	// TODO  Add facet aspect  ref: http://www.blevesearch.com/docs/Result-Faceting/
-	termFacet := bleve.NewFacetRequest("opencore:params.Pname", 5)
-	search.AddFacet("terms", termFacet)
+	// termFacet := bleve.NewFacetRequest("opencore:params.Pname", 5)
+	// search.AddFacet("terms", termFacet)
 
 	search.Highlight = bleve.NewHighlightWithStyle("html") // need Stored and IncludeTermVectors in index
 	searchResults, err := index.Search(search)
 	if err != nil {
-		log.Printf("Error search results: %v", err)
+		log.Printf("Error search results: %v  , %s", err, search)
 	}
 
 	hits := searchResults.Hits // array of struct DocumentMatch
@@ -282,7 +312,7 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 	var results []FreeTextResults
 
 	for k, item := range hits {
-		// fmt.Printf("\n%d: %s, %f, %s, %v\n", k, item.Index, item.Score, item.ID, item.Fragments)
+		fmt.Printf("\n%d: %s, %f, %s, %v\n", k, item.Index, item.Score, item.ID, item.Fragments)
 		// fmt.Printf("%v\n", item.Fields["potentialAction.target.description"])
 		var frags []Fragment
 		for key, frag := range item.Fragments {
@@ -297,24 +327,33 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 		// set up a material icon   ref:  https://material.io/icons/
 		var iconName string
 		var iconDescription string
-		if strings.Contains(item.Index, "janus") {
-			iconName = "file_download"                 // material design icon name used in template
-			iconDescription = "JRSO Data landing page" // material design icon name used in template
+		if strings.Contains(item.Index, "ocd") {
+			iconName = "file_download"          // material design icon name used in template
+			iconDescription = "source:OpenCore" // material design icon name used in template
+		}
+		if strings.Contains(item.Index, "bcodmo") {
+			iconName = "file_download"         // material design icon name used in template
+			iconDescription = "source:BCO-DMO" // material design icon name used in template
 		}
 		if strings.Contains(item.Index, "csdco") {
-			iconName = "file_download"                  // material design icon name used in template
-			iconDescription = "CSDCO Data landing page" // material design icon name used in template
+			iconName = "http"                // material design icon name used in template  alts:  web_asset or web
+			iconDescription = "source:CSDCO" // material design icon name used in template  alts:  web_asset or web
 		}
-		if strings.Contains(item.Index, "abstracts") {
-			iconName = "http"                  // material design icon name used in template  alts:  web_asset or web
-			iconDescription = "CSDCO Abstract" // material design icon name used in template  alts:  web_asset or web
+		if strings.Contains(item.Index, "linkedearth") {
+			iconName = "http"                      // material design icon name used in template  alts:  web_asset or web
+			iconDescription = "source:LinkedEarth" // material design icon name used in template  alts:  web_asset or web
 		}
 		if strings.Contains(item.Index, "rwg") {
-			iconName = "http"                 // material design icon name used in template  alts:  web_asset or web
-			iconDescription = "EarthCube CDF" // material design icon name used in template  alts:  web_asset or web
+			iconName = "http"                                               // material design icon name used in template  alts:  web_asset or web
+			iconDescription = "source:EarthCube CDF Registry Working Group" // material design icon name used in template  alts:  web_asset or web
 		}
 
-		results = append(results, FreeTextResults{k, item.Index, item.Score, item.ID, frags, iconName, iconDescription})
+		// TODO make a SPARQL call and get the description field and see what we can get
+		// make a SPARQL call on item ID..  strip http:// from the ID and add in a UNION call across HTTP and HTTPS
+		// do as a full function call
+		description := strip.StripTags(SPARQLDescription(item.ID))
+
+		results = append(results, FreeTextResults{k, item.Index, item.Score, item.ID, frags, iconName, iconDescription, description})
 	}
 
 	//  Looking at the JSON a bit to see about using typescript and stencil to
@@ -325,6 +364,16 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 
 	index.Close()
 	return results, searchResults
+}
+
+func SPARQLDescription(subject string) string {
+
+	desc, err := sparql.DescriptionCall(subject) // turn sparql call on / off
+	if err != nil {
+		log.Printf("SPARQL call failed: %s", err)
+	}
+
+	return desc
 }
 
 // TODO

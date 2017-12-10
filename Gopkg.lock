@@ -2,10 +2,10 @@
 
 
 [[projects]]
-  branch = "master"
   name = "github.com/blevesearch/bleve"
-  packages = [".","analysis","analysis/analyzer/standard","analysis/datetime/flexible","analysis/datetime/optional","analysis/lang/en","analysis/token/lowercase","analysis/token/porter","analysis/token/stop","analysis/tokenizer/unicode","document","geo","index","index/store","index/store/boltdb","index/store/gtreap","index/upsidedown","mapping","numeric","registry","search","search/collector","search/facet","search/highlight","search/highlight/format/html","search/highlight/fragmenter/simple","search/highlight/highlighter/html","search/highlight/highlighter/simple","search/query","search/scorer","search/searcher"]
-  revision = "6eea5b78da004393b1d06b8c88d1bed9ca0a94b2"
+  packages = [".","analysis","analysis/analyzers/standard_analyzer","analysis/datetime_parsers/datetime_optional","analysis/datetime_parsers/flexible_go","analysis/language/en","analysis/token_filters/lower_case_filter","analysis/token_filters/porter","analysis/token_filters/stop_tokens_filter","analysis/tokenizers/unicode","document","index","index/store","index/store/boltdb","index/store/gtreap","index/upside_down","numeric_util","registry","search","search/collectors","search/facets","search/highlight","search/highlight/fragment_formatters/html","search/highlight/fragmenters/simple","search/highlight/highlighters/html","search/highlight/highlighters/simple","search/scorers","search/searchers"]
+  revision = "97393d027342f43b17da2f02c090a4e728ac929f"
+  version = "v0.5.0"
 
 [[projects]]
   name = "github.com/blevesearch/go-porterstemmer"
@@ -38,10 +38,16 @@
   version = "v1.1"
 
 [[projects]]
+  branch = "master"
   name = "github.com/gorilla/mux"
   packages = ["."]
-  revision = "24fca303ac6da784b9e8269f724ddeb0b2eea5e7"
-  version = "v1.5.0"
+  revision = "7904d2e42e7ebbdb4a6eb3e57eb201b11df25c57"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/grokify/html-strip-tags-go"
+  packages = ["."]
+  revision = "7a55ac806487a66b5d52fa2215f5d60aa33b5336"
 
 [[projects]]
   branch = "master"
@@ -82,6 +88,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5f5b018971092c146d35086db4158cf4ebad970fce3ada22f9ecd2c2e94e59e5"
+  inputs-digest = "803236b4432b6c570cda307c2a9e102a95fdb90e5b13500d105755a40f73f37e"
   solver-name = "gps-cdcl"
   solver-version = 1
