@@ -27,6 +27,10 @@ func main() {
 	// robotRouter.Path("/robots.txt").Handler(http.ServeFile(http.Dir("./static")))
 	// http.Handle("/robots.txt", &MyServer{robotRouter})
 
+	swaggerui := mux.NewRouter()
+	swaggerui.PathPrefix("/swagger-ui/").Handler(http.StripPrefix("/swagger-ui/", http.FileServer(http.Dir("./static/swagger-ui"))))
+	http.Handle("/swagger-ui/", &MyServer{swaggerui})
+
 	imageRouter := mux.NewRouter()
 	imageRouter.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("./static/images"))))
 	http.Handle("/images/", &MyServer{imageRouter})
