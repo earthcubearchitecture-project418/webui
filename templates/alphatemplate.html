@@ -135,6 +135,153 @@
         }
     </style>
 
+    <style type="text/css">
+        /* pill box start */
+
+        .pill-box {
+            line-height: 25px;
+        }
+
+        .pill-box-left,
+        .pill-box-right {
+            border: 1px solid #e6e6e6;
+            border-radius: 4px;
+            color: #666;
+            padding: 2px;
+        }
+
+        .pill-box-left {
+            background-color: #e6e6e6;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            padding-left: 6px;
+            text-align: center;
+        }
+
+        .pill-box-right {
+            background-color: #fff;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            border-left: 0;
+            padding-left: 4px;
+            padding-right: 6px;
+        }
+
+        /* blue */
+
+        .pill-blue .pill-box-left,
+        .pill-blue .pill-box-right {
+            border-color: #4da6ff;
+        }
+
+        .pill-blue .pill-box-left {
+            background-color: #4da6ff;
+            color: #e5f2ff;
+        }
+
+        /* red */
+
+        .pill-red .pill-box-left,
+        .pill-red .pill-box-right {
+            border-color: #ff704d;
+        }
+
+        .pill-red .pill-box-left {
+            background-color: #ff704d;
+            color: #991f00;
+        }
+
+        /* green */
+
+        .pill-green .pill-box-left,
+        .pill-green .pill-box-right {
+            border-color: #70db70;
+        }
+
+        .pill-green .pill-box-left {
+            background-color: #70db70;
+            color: #ebfaeb;
+        }
+
+        /* black */
+
+        .pill-black .pill-box-left,
+        .pill-black .pill-box-right {
+            border-color: #000;
+        }
+
+        .pill-black .pill-box-left {
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* purple */
+
+        .pill-purple .pill-box-left,
+        .pill-purple .pill-box-right {
+            border-color: #db4dff;
+        }
+
+        .pill-purple .pill-box-left {
+            background-color: #db4dff;
+            color: #fff;
+        }
+
+        /* pill box end */
+
+   
+    </style>
+
+
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .wrapper>div {
+            border: 2px solid rgb(233, 171, 88);
+            border-radius: 5px;
+            background-color: rgba(233, 171, 88, .5);
+            padding: 1em;
+            color: #d9480f;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            grid-auto-rows: minmax(100px, auto);
+        }
+
+        .one {
+            grid-column: 1/3;
+            grid-row: 1/3;
+        }
+
+        .two {
+            grid-column: 3;
+            grid-row: 1/3;
+        }
+
+        .three {
+            grid-column: 1/3;
+            grid-row: 3;
+        }
+
+        .four {
+            grid-column: 3;
+            grid-row: 3;
+        }
+    </style>
+
+
+
 </head>
 
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
@@ -166,19 +313,24 @@
 
                 <!-- Navigation -->
                 <nav class="mdl-navigation">
-
                     <a class="mdl-navigation__link" href="/">Search</a>
                     <a class="mdl-navigation__link" href="/html/about.html">About</a>
-
+                    <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418">GitHub</a>
+                    <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Vocabulary">Vocabulary</a>
+                    <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs/blob/master/publishing.md">Publishing</a>
                 </nav>
             </div>
+
+
         </header>
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">P418</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="/">Search</a>
                 <a class="mdl-navigation__link" href="/html/about.html">About</a>
-
+                <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418">GitHub</a>
+                <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Vocabulary">Vocabulary</a>
+                <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs/blob/master/publishing.md">Publishing</a>
             </nav>
         </div>
         <main class="mdl-layout__content">
@@ -195,21 +347,45 @@
                         <div class="mdl-cell mdl-cell--12-col">
                             <details>
                                 <summary>Search examples</summary>
-                                <p>This is a set of <i>search stories or terms</i> that work with the current limited index.  These are 
-                                golden paths for sure but feel free to straw from the paths and try new things and let us know how they went.</p>
+                                <p>This is a set of
+                                    <i>search stories or terms</i> that work with the current limited index. These are golden
+                                    paths for sure but feel free to straw from the paths and try new things and let us know
+                                    how they went.</p>
 
                                 <ul>
-<li><a href="./?q=organic carbon">organic carbon</a> </li>
-<li><a href="./?q=organic carbon source:linkedearth">organic carbon  source:linkedearth</a> </li>
-<li><a href="./?q=lake malawi">lake malawi</a> </li>
-<li><a href="./?q=lake malawi source:linkedearth">lake malawi source:linkedearth</a> </li>
-<li><a href="./?q=holocene sst record">holocene sst record</a> </li>
-<li><a href="./?q=Greenland ice cores">Greenland ice cores</a> </li>
-<li><a href="./?q=Renland ice cap">Renland ice cap</a> </li>
-<li><a href="./?q=XRF core data">XRF core data</a> </li>
-<li><a href="./?q=oceanography soruce:rwg">oceanography source:rwg</a> </li>
-<li><a href="./?q=ocean acidification soruce:rwg">ocean acidification</a> </li>
-<li><a href="./?q=fukushima">fukushima</a> </li>
+                                    <li>
+                                        <a href="./?q=organic carbon">organic carbon</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=organic carbon source:linkedearth">organic carbon source:linkedearth</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=lake malawi">lake malawi</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=lake malawi source:linkedearth">lake malawi source:linkedearth</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=holocene sst record">holocene sst record</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=Greenland ice cores">Greenland ice cores</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=Renland ice cap">Renland ice cap</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=XRF core data">XRF core data</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=oceanography soruce:rwg">oceanography source:rwg</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=ocean acidification soruce:rwg">ocean acidification</a>
+                                    </li>
+                                    <li>
+                                        <a href="./?q=fukushima">fukushima</a>
+                                    </li>
 
 
                                 </ul>
@@ -218,7 +394,7 @@
                     </div>
 
                     <div class="mdl-cell mdl-cell--12-col">
-                        <form id="formcall" action="/" method="GET">
+                        <form id="formcall" action="/alpha" method="GET">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                 <input class="mdl-textfield__input" type="text" name="q" value="{{.Term}}" id="q">
                                 <label class="mdl-textfield__label" for="sample3">Search repository metadata...</label>
@@ -226,11 +402,11 @@
                             </div>
                         </form>
                         <div>
-                            <a href="./?q={{.Term}}&start={{.PrevStart}}">
+                            <a href="/alpha?q={{.Term}}&start={{.PrevStart}}">
                                 <i style="font-size:24px" class="material-icons">navigate_before</i>
                             </a>
                             <div style="display:inline;font-size:18px">{{if .Count}} {{.StartAt}} - {{.EndAt}} of {{.Count}} {{end}} {{if .Message}} {{.Message}} {{end}}</div>
-                            <a href="./?q={{.Term}}&start={{.NextStart}}">
+                            <a href="./alpha?q={{.Term}}&start={{.NextStart}}">
                                 <i style="font-size:24px" class="material-icons">navigate_next</i>
                             </a>
                         </div>
@@ -240,63 +416,59 @@
 
                 {{end}} {{define "T"}}
 
-
-
-
                 <!-- loop and display results -->
+                {{range $loop := .}}
+
                 <div class="mdl-grid" style="max-width:80%">
-
-                    <div class="mdl-cell mdl-cell--8-col">
-                        {{range $loop := .}}
-                        <div class="mdl-card" style="width:100%;margin-bottom:40px">
-                            <div class="mdl-card__title">
-                                <i style="font-size:36px" class="material-icons">{{$loop.IconName}}</i>
-
-                                <h4 class="mdl-card__title-text">
-                                    <a target="_blank" href="{{$loop.ID}}">{{$loop.ID}}</a>
-                                </h4>
-                            </div>
-                            <div class="mdl-card__media">
-                                <p style="margin-left:18px;font-size:16px"> {{$loop.IconDescription}}
-                                    <span style="margin-left:16px;font-size:10px"> Score: {{$loop.Score}} </span>
-                                </p>
-                            </div>
-                            <div style="margin:5px" class="mdl-card__supporting-text">
-                                    {{$loop.Description}}
-                                <ul>
-                                    {{range $loop2 := $loop.Fragments}}
-                                    <li>{{$loop2.Key}} : {{range $loop3 := $loop2.Value}} {{$loop3}} {{end}} </li>
-                                    {{end}}
-                                </ul>
-                            </div>
-                     
+                    <span> {{$loop.Name}}</span>
+                    <span style=" padding-left:100px; ">
+                        <small> max score: {{$loop.HighScore}}</small>
+                    </span>
+                    <div class="wrapper">
+                        <div class="one">
+                            {{range $item := $loop.OR}} {{$item.Position}}:
+                            <a target="_blank" href="{{$item.ID}}">{{$item.ID}}</a>
+                            <small>score {{$item.Score}}</small>
+                            <br> {{end}}
                         </div>
-                        {{end}} {{end}} {{define "S"}}
-                    </div>
-
-                    <div class="mdl-cell mdl-cell--4-col">
-                        {{if .Description}}
-                        <div class="mdl-card">
-                            <div class="mdl-card__title">
-                                <h2 class="mdl-card__title-text">
-                                    <a target="_blank" href="{{.URL}}">{{.URL}}</a>
-                                </h2>
-                            </div>
-                            <div class="mdl-card__media" style="background-color:white">
-                                <img src="{{.Logo}}" width="50%" border="0" alt="" style="padding:10px;">
-                            </div>
-                            <div class="mdl-card__supporting-text">
+                        <div class="two">Two</div>
+                        <div class="three">
 
 
-                                <p>{{.Name}}</p>
-                                <p>{{.Description}}</p>
-                                <p>Contact: {{.ContactName}} {{.ContactEmail}}</p>
+                            <div class="pill-box">
+                                <span class="pill-box-left">
+                                    param
+                                </span>
+                                <!-- /.pill-box-left -->
+                                <span class="pill-box-right">
+                                    Some param name...
+                                </span>
+                                <!-- /.pill-box-right -->
                             </div>
+                            <!-- /.pill-box -->
+
+
+
                         </div>
-                        {{end}}
+                        <div class="four">
+
+                            <div class="pill-box">
+                                <span class="pill-box-left">
+                                    person
+                                </span>
+                                <!-- /.pill-box-left -->
+                                <span class="pill-box-right">
+                                    some person
+                                </span>
+                                <!-- /.pill-box-right -->
+                            </div>
+                            <!-- /.pill-box -->
+
+                        </div>
                     </div>
 
                 </div>
+                {{end}}
             </div>
         </main>
     </div>

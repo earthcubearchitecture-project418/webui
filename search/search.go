@@ -55,6 +55,7 @@ type Qstring struct {
 // HoldingPage is a simple handler used before we were ready to expose
 // the search systems.  Once operational we should remove or at least comment
 // out this function.
+// DEPRECATED along with holdingtemplate.html   (re-purpose later for full client side search UI)
 func HoldingPage(w http.ResponseWriter, r *http.Request) {
 	templateFile := "./templates/holdingtemplate.html"
 
@@ -157,17 +158,17 @@ func DoSearch(w http.ResponseWriter, r *http.Request) {
 		log.Printf("template parse failed: %s", err)
 	}
 
-	err = ht.ExecuteTemplate(w, "Q", searchmeta) //substitute fields in the template 't', with values from 'user' and write it out to 'w' which implements io.Writer
+	err = ht.ExecuteTemplate(w, "Q", searchmeta) //  Section Q sets the navigation elements
 	if err != nil {
 		log.Printf("Template execution failed: %s", err)
 	}
 
-	err = ht.ExecuteTemplate(w, "T", queryResults) //substitute fields in the template 't', with values from 'user' and write it out to 'w' which implements io.Writer
+	err = ht.ExecuteTemplate(w, "T", queryResults) // Section T results
 	if err != nil {
 		log.Printf("Template execution failed: %s", err)
 	}
 
-	err = ht.ExecuteTemplate(w, "S", spres) //substitute fields in the template 't', with values from 'user' and write it out to 'w' which implements io.Writer
+	err = ht.ExecuteTemplate(w, "S", spres) // Section S sets the side bar (not active at this time, only works with RWG results...)
 	if err != nil {
 		log.Printf("Template execution failed: %s", err)
 	}
@@ -258,6 +259,12 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 	if err != nil {
 		log.Printf("Error with index5 alias: %v", err)
 	}
+	index6, err := bleve.OpenUsing("indexes/ieda.bleve", map[string]interface{}{
+		"read_only": true,
+	})
+	if err != nil {
+		log.Printf("Error with index5 alias: %v", err)
+	}
 
 	var index bleve.IndexAlias
 
@@ -283,11 +290,15 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 			index = bleve.NewIndexAlias(index5)
 			log.Println("Active index: 5")
 		}
+		if strings.Contains(qstruct.Qualifiers["source"], "ieda") {
+			index = bleve.NewIndexAlias(index5)
+			log.Println("Active index: 6")
+		}
 	} else {
 		// index = bleve.NewIndexAlias(index1, index2, index3)
 		// log.Println("Active index: 1,2,3")
-		index = bleve.NewIndexAlias(index1, index2, index3, index4, index5) // just use rwg and janus for now in P418
-		log.Println("Active index: 1,2,3,4,5")
+		index = bleve.NewIndexAlias(index1, index2, index3, index4, index5, index6) // just use rwg and janus for now in P418
+		log.Println("Active index: 1,2,3,4,5,6")
 	}
 
 	log.Printf("Codex index built\n")
