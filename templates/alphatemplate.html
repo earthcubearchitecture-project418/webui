@@ -54,6 +54,10 @@
     <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
+    <!-- load the web components for P418 alpha -->
+    <script src="/components/leaflet-element/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/components/leaflet-element/bower_components/leaflet-map/leaflet-map.html">
+
     <!-- some CSS stuff -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -133,6 +137,14 @@
         BODY {
             font-family: Hack, monospace;
         }
+
+a {
+    width: 250px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
     </style>
 
     <style type="text/css">
@@ -431,38 +443,74 @@
                             <small>score {{$item.Score}}</small>
                             <br> {{end}}
                         </div>
-                        <div class="two">Two</div>
+                        <div class="two">
+
+                             
+                <!-- <leaflet-map style="margin:4px;height:200px;width:200px" fitToMarkers="true" zoom="1"> -->
+                <leaflet-map style="height:100%;" fitToMarkers="true" zoom="2">
+                        <leaflet-tilelayer url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}" max-zoom="13">
+                            Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri
+                        </leaflet-tilelayer>
+                        <template is="dom-bind" id=" {{$loop.Name}}lmap">
+                            <leaflet-geojson color="#FF0000" data="[[data]]"></leaflet-geojson>
+                            <script>
+                                var t = document.getElementById(' {{$loop.Name}}lmap');
+                                t.data = {
+                                    "type": "FeatureCollection",
+                                    "features": [
+                                        {
+                                            "type": "Feature",
+                                            "properties": {"url":"foo"},
+                                            "geometry": {
+                                                "type": "Point",
+                                                "coordinates": [
+                                                    -31.640625,
+                                                    36.87962060502676
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                };
+                            </script>
+                        </template>
+                    </leaflet-map>
+
+                        </div>
                         <div class="three">
 
 
+                                {{range $pitem := $loop.PS}}
                             <div class="pill-box">
                                 <span class="pill-box-left">
                                     param
                                 </span>
                                 <!-- /.pill-box-left -->
                                 <span class="pill-box-right">
-                                    Some param name...
+                                        {{$pitem.Val}}
                                 </span>
                                 <!-- /.pill-box-right -->
                             </div>
                             <!-- /.pill-box -->
+                            {{end}}
 
 
 
                         </div>
                         <div class="four">
 
+                                {{range $pplitem := $loop.PPLS}}
                             <div class="pill-box">
                                 <span class="pill-box-left">
                                     person
                                 </span>
                                 <!-- /.pill-box-left -->
                                 <span class="pill-box-right">
-                                    some person
+                                        {{$pplitem.Name}}
                                 </span>
                                 <!-- /.pill-box-right -->
                             </div>
                             <!-- /.pill-box -->
+                            {{end}}
 
                         </div>
                     </div>

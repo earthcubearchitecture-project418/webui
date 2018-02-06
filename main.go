@@ -47,6 +47,10 @@ func main() {
 	htmlRouter.PathPrefix("/html/").Handler(http.StripPrefix("/html/", http.FileServer(http.Dir("./static/html"))))
 	http.Handle("/html/", &MyServer{htmlRouter})
 
+	componentRouter := mux.NewRouter()
+	componentRouter.PathPrefix("/components/").Handler(http.StripPrefix("/components/", http.FileServer(http.Dir("./static/components"))))
+	http.Handle("/components/", &MyServer{componentRouter})
+
 	log.Printf("About to listen on 9900. Go to http://127.0.0.1:9900/")
 
 	err := http.ListenAndServe(":9900", nil)

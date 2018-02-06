@@ -17,6 +17,9 @@ type OrganicResultsSet struct {
 	OR        []OrganicResults // provider:results
 	HighScore float64          // provider:highestScore
 	Name      string           // ordered string array based on score
+	PS        []ParamSet
+	PPLS      []PersonSet
+	// GJ    string
 }
 
 // OrganicResults is a place holder struct
@@ -25,6 +28,24 @@ type OrganicResults struct {
 	Index    string
 	Score    float64
 	ID       string
+}
+
+// ParamSet is the set of parameters associated with the result set
+type ParamSet struct {
+	Val     string
+	Desc    string
+	PubName string
+	PubURL  string
+}
+
+// PersonSet is the set of people associated with a result set
+type PersonSet struct {
+	G        string
+	Person   string
+	Rolename string
+	Name     string
+	URL      string
+	Orcid    string
 }
 
 // Alpha for threaded searches UI testing
@@ -63,14 +84,35 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 
 	searchmeta.Message = ""
 
+	// get the resources
 	resp := getByQuery(qstring.Query) // not using the qualifiers at this time
 	var orsa []OrganicResultsSet
 	if err := json.Unmarshal([]byte(resp), &orsa); err != nil {
 		log.Println(err)
 	}
 
-	params := paramsBySet()
-	log.Println(params)
+	// loop on orsa..  and sent the or array to each query to populate the params, people and geojson then for it...
+	// find prams based on resource set
+	for item := range orsa {
+		or := orsa[item].OR
+		// just want the string array of ID's  (make a small function for this)
+		params := paramsBySet(resAsJSON(or))
+		var p []ParamSet
+		if err := json.Unmarshal([]byte(params), &p); err != nil {
+			log.Println(err)
+		}
+		orsa[item].PS = p
+
+		people := peopleBySet(resAsJSON(or))
+		var ppl []PersonSet
+		if err := json.Unmarshal([]byte(people), &ppl); err != nil {
+			log.Println(err)
+		}
+		orsa[item].PPLS = ppl
+
+		// log.Println(item)
+		// log.Println(p)
+	}
 
 	ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
 	if err != nil {
@@ -114,16 +156,11 @@ func geoJSONBySet() {
 
 }
 
-func paramsBySet() string {
-	a := []string{"<https://www.bco-dmo.org/dataset/3300>", "<http://opencoredata.org/id/dataset/bcd15975-680c-47db-a062-ac0bb6e66816>"}
-	items, err := json.Marshal(a)
-	if err != nil {
-		log.Fatal("Cannot encode to JSON ", err)
-	}
-
+func paramsBySet(ja string) string {
+	// log.Println(ja)
 	resp, err := resty.R().
 		SetFormData(map[string]string{
-			"body": string(items),
+			"body": ja,
 		}).
 		Post("http://geodex.org/api/v1/graph/ressetdetails")
 	if err != nil {
@@ -133,6 +170,37 @@ func paramsBySet() string {
 	return resp.String()
 }
 
-func peopleBySet() {
+func peopleBySet(ja string) string {
+	resp, err := resty.R().
+		SetFormData(map[string]string{
+			"body": ja,
+		}).
+		Post("http://geodex.org/api/v1/graph/ressetpeople")
+	if err != nil {
+		log.Print(err)
+	}
 
+	log.Println(ja)
+
+	log.Println(resp.String())
+	return resp.String()
+}
+
+func resAsJSON(a []OrganicResults) string {
+
+	var r []string
+
+	for item := range a {
+		// TODO..  this is troubling..   managing URI vs URL is a danger zone..   need to resolve
+		// and set a policy
+		// r = append(r, a[item].ID)
+		r = append(r, fmt.Sprintf("<%s>", strings.TrimSpace(a[item].ID)))
+	}
+
+	resJSON, err := json.Marshal(r)
+	if err != nil {
+		log.Fatal("Cannot encode to JSON ", err)
+	}
+
+	return string(resJSON)
 }
