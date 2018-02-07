@@ -1,6 +1,7 @@
 package search
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -19,7 +20,7 @@ type OrganicResultsSet struct {
 	Name      string           // ordered string array based on score
 	PS        []ParamSet
 	PPLS      []PersonSet
-	// GJ    string
+	GJ        string
 }
 
 // OrganicResults is a place holder struct
@@ -110,8 +111,11 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 		}
 		orsa[item].PPLS = ppl
 
-		// log.Println(item)
-		// log.Println(p)
+		gj := geoJSONBySet(resAsJSON(or))
+		orsa[item].GJ = gj
+
+		log.Println(item)
+		log.Println(gj)
 	}
 
 	ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
@@ -142,18 +146,28 @@ func getByQuery(query string) string {
 		log.Println(err)
 	}
 
-	// fmt.Printf("\nError: %v", err)
-	// fmt.Printf("\nResponse Status Code: %v", resp.StatusCode())
-	// fmt.Printf("\nResponse Status: %v", resp.Status())
-	// fmt.Printf("\nResponse Time: %v", resp.Time())
-	// fmt.Printf("\nResponse Received At: %v", resp.ReceivedAt())
-	// fmt.Printf("\nResponse Body: %v", resp) // or resp.String() or string(resp.Body())
-
 	return resp.String()
 }
 
-func geoJSONBySet() {
+func geoJSONBySet(ja string) string {
+	resp, err := resty.R().
+		SetFormData(map[string]string{
+			"body": ja,
+		}).
+		Post("http://geodex.org/api/v1/spatial/search/resourceset")
+	if err != nil {
+		log.Print(err)
+	}
 
+	fmt.Printf("\nInput: %s", ja)
+	fmt.Printf("\nError: %v", err)
+	fmt.Printf("\nResponse Status Code: %v", resp.StatusCode())
+	fmt.Printf("\nResponse Status: %v", resp.Status())
+	fmt.Printf("\nResponse Time: %v", resp.Time())
+	fmt.Printf("\nResponse Received At: %v", resp.ReceivedAt())
+	fmt.Printf("\nResponse Body: %v", resp) // or resp.String() or string(resp.Body())
+
+	return resp.String()
 }
 
 func paramsBySet(ja string) string {
@@ -180,9 +194,9 @@ func peopleBySet(ja string) string {
 		log.Print(err)
 	}
 
-	log.Println(ja)
+	// log.Println(ja)
 
-	log.Println(resp.String())
+	// log.Println(resp.String())
 	return resp.String()
 }
 
@@ -197,10 +211,16 @@ func resAsJSON(a []OrganicResults) string {
 		r = append(r, fmt.Sprintf("<%s>", strings.TrimSpace(a[item].ID)))
 	}
 
-	resJSON, err := json.Marshal(r)
-	if err != nil {
-		log.Fatal("Cannot encode to JSON ", err)
-	}
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	enc.SetEscapeHTML(false)
+	enc.Encode(r)
 
-	return string(resJSON)
+	// resJSON, err := json.Marshal(r)
+	// if err != nil {
+	// 	log.Fatal("Cannot encode to JSON ", err)
+	// }
+
+	// return string(resJSON)
+	return fmt.Sprint(&buf)
 }

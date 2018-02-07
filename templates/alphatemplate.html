@@ -138,13 +138,13 @@
             font-family: Hack, monospace;
         }
 
-a {
-    width: 250px;
-    display: inline-block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
+        a {
+            width: 250px;
+            display: inline-block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
     </style>
 
     <style type="text/css">
@@ -152,6 +152,8 @@ a {
 
         .pill-box {
             line-height: 25px;
+            display: inline-block;
+            white-space: nowrap;
         }
 
         .pill-box-left,
@@ -240,8 +242,6 @@ a {
         }
 
         /* pill box end */
-
-   
     </style>
 
 
@@ -445,48 +445,33 @@ a {
                         </div>
                         <div class="two">
 
-                             
-                <!-- <leaflet-map style="margin:4px;height:200px;width:200px" fitToMarkers="true" zoom="1"> -->
-                <leaflet-map style="height:100%;" fitToMarkers="true" zoom="2">
-                        <leaflet-tilelayer url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}" max-zoom="13">
-                            Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri
-                        </leaflet-tilelayer>
-                        <template is="dom-bind" id=" {{$loop.Name}}lmap">
-                            <leaflet-geojson color="#FF0000" data="[[data]]"></leaflet-geojson>
-                            <script>
-                                var t = document.getElementById(' {{$loop.Name}}lmap');
-                                t.data = {
-                                    "type": "FeatureCollection",
-                                    "features": [
-                                        {
-                                            "type": "Feature",
-                                            "properties": {"url":"foo"},
-                                            "geometry": {
-                                                "type": "Point",
-                                                "coordinates": [
-                                                    -31.640625,
-                                                    36.87962060502676
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                };
-                            </script>
-                        </template>
-                    </leaflet-map>
+
+                            <!-- <leaflet-map style="margin:4px;height:200px;width:200px" fitToMarkers="true" zoom="1"> -->
+                            <leaflet-map style="height:100%;" fitToMarkers="true" zoom="2">
+                                <leaflet-tilelayer url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}" max-zoom="13">
+                                    Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri
+                                </leaflet-tilelayer>
+                                <template is="dom-bind" id="{{$loop.Name}}lmap">
+                                    <leaflet-geojson color="#FF0000" data="[[data]]"></leaflet-geojson>
+                                    <script>
+                                        var t = document.getElementById('{{$loop.Name}}lmap');
+                                        t.data = {{$loop.GJ}};
+                                    </script>
+                                </template>
+                            </leaflet-map>
 
                         </div>
                         <div class="three">
 
 
-                                {{range $pitem := $loop.PS}}
+                            {{range $pitem := $loop.PS}}
                             <div class="pill-box">
                                 <span class="pill-box-left">
                                     param
                                 </span>
                                 <!-- /.pill-box-left -->
                                 <span class="pill-box-right">
-                                        {{$pitem.Val}}
+                                    {{$pitem.Val}}
                                 </span>
                                 <!-- /.pill-box-right -->
                             </div>
@@ -498,14 +483,32 @@ a {
                         </div>
                         <div class="four">
 
-                                {{range $pplitem := $loop.PPLS}}
+                            <div class="pill-box">
+                                <span class="pill-box-left">
+                                    person
+                                </span>
+                                <span class="pill-box-right">
+                                    John Doe
+                                </span>
+                            </div>
+
+                            <div class="pill-box">
+                                    <span class="pill-box-left">
+                                        person
+                                    </span>
+                                    <span class="pill-box-right">
+                                        Jane Doe
+                                    </span>
+                                </div>
+
+                            {{range $pplitem := $loop.PPLS}}
                             <div class="pill-box">
                                 <span class="pill-box-left">
                                     person
                                 </span>
                                 <!-- /.pill-box-left -->
                                 <span class="pill-box-right">
-                                        {{$pplitem.Name}}
+                                    {{$pplitem.Name}}
                                 </span>
                                 <!-- /.pill-box-right -->
                             </div>
