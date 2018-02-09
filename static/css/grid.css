@@ -5,6 +5,15 @@
 
 }
 
+html, body {
+	width: 100%;
+	height: 100%;
+	/* color: white; */
+	/* text-transform: uppercase;
+	text-align: center;
+	font-family: helvetica, arial; */
+}
+
 /*
  *
  * Use the 2fr or something like that over
@@ -17,6 +26,7 @@
 
 .grid {
 	display: grid;
+	min-height: 100%;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	/* grid-template-rows: 1fr 1fr 1fr 1fr; */
 	grid-template-rows: minmax(auto, 1fr);
@@ -64,15 +74,15 @@
 	.grid {
 		display: grid;
 		grid-template-columns: 10% 1fr 1fr 1fr 200px 10%;
-		/* grid-template-rows: 1fr 1fr 1fr 1fr; */
-		grid-template-rows: minmax(auto, 1fr);
+		grid-template-rows: auto auto 1fr auto;
+		/* grid-template-rows: minmax(auto, 1fr); */
 		grid-template-areas: 
 		". title title title title . " 
 		". header header header header . " 
 		". content content content sidebar . " 
 		". footer footer footer footer . "
 		;
-		grid-gap: 5px;
+		grid-gap: 10px;
 
 	}
 	.sidebar {

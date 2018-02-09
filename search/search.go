@@ -72,106 +72,136 @@ func HoldingPage(w http.ResponseWriter, r *http.Request) {
 
 // DoSearch is there to do searching..  (famous documentation style intact!)
 func DoSearch(w http.ResponseWriter, r *http.Request) {
+	templateFile := "./templates/indextemplate.html" // Make a var in case I want other templates I switch to later...
+
 	log.Printf("r path: %s\n", r.URL.Query()) // need to log this better so I can filter out search terms later
 	queryterm := r.URL.Query().Get("q")
 	queryterm = strings.TrimSpace(queryterm) // remove leading and trailing white spaces a user might put in (not internal spaces though)
 
-	// get the start at value or set to 0
-	var startAt uint64
-	startAt = 0
-	if s, err := strconv.Atoi(r.URL.Query().Get("start")); err == nil {
-		startAt = uint64(s)
-	}
-
-	// Make a var in case I want other templates I switch to later...
-	templateFile := "./templates/indextemplate.html"
-
-	// parse the queryterm to get the colon based qualifiers
-	qstring := parse(queryterm)
-	distance := ""
-	queryResults, sr := indexCall(qstring, startAt, distance)
-	qrl := len(queryResults)
-
-	// moved the len test and string mod to here
-	// TODO..  Yet Another Ugly Section (YAUS)  (I've named the pattern..  that is just sad)
-	// check here..  if results are 0 then recursive call with ~1
-	// check here and if 0 then try again with ~2
-	// var finalResults []FreeTextResults
-	fmt.Printf("Len: %d    distance: %s \n", qrl, distance)
-	if qrl == 0 {
-		if strings.Contains(distance, "") {
-			fmt.Println("Call ~1")
-			queryResults, err := indexCall(qstring, startAt, "~1")
-			qrl = len(queryResults)
-			if err != nil {
-				log.Print(err)
-			}
-		}
-	}
-	if qrl == 0 {
-		if strings.Contains(distance, "~1") {
-			fmt.Println("Call ~2")
-			queryResults, err := indexCall(qstring, startAt, "~2")
-			qrl = len(queryResults)
-			if err != nil {
-				log.Print(err)
-			}
-		}
-	}
-
-	// if len(results) > 0 {
-	// 	finalResults = results
-	// }
-
-	// Set up some metadata on the search results to return
 	var searchmeta ResultsMetaData
-	searchmeta.Term = queryterm // We don't use qstring.Query here since we want the full string including qualifiers, returned to the page for rendering with results
-	searchmeta.Count = sr.Total
-	searchmeta.StartAt = startAt
-	searchmeta.EndAt = startAt + 20 // TODO make this a var..   do not set statis!!!!!!
-	searchmeta.NextStart = searchmeta.EndAt + 1
-	searchmeta.PrevStart = searchmeta.StartAt - 20
-	if qrl == 0 {
-		if queryterm == "" {
-			searchmeta.Message = "P418 Search Test"
-
-		} else {
-			searchmeta.Message = "Search results empty"
-		}
-	}
-
-	// If we have a term.. search the triplestore
+	var queryResults []FreeTextResults
 	var spres sparql.SPres
-	if qrl > 0 {
-		topResult := queryResults[0] // pass this as a new template section TR!
-		fmt.Println(topResult.ID)
-		var err error
-		spres, err = sparql.DoCall(topResult.ID) // turn sparql call on / off
-		if err != nil {
-			log.Printf("SPARQL call failed: %s", err)
+
+	// This is SO STUPID..   remove this quick hack and make what this scopes
+	// a proper function call!!!!!!!
+	if queryterm != "" {
+
+		// get the start at value or set to 0
+		var startAt uint64
+		startAt = 0
+		if s, err := strconv.Atoi(r.URL.Query().Get("start")); err == nil {
+			startAt = uint64(s)
 		}
-		// fmt.Print(spres.Description)
+
+		// parse the queryterm to get the colon based qualifiers
+		qstring := parse(queryterm)
+		distance := ""
+		queryResults, sr := indexCall(qstring, startAt, distance)
+		qrl := len(queryResults)
+
+		// moved the len test and string mod to here
+		// TODO..  Yet Another Ugly Section (YAUS)  (I've named the pattern..  that is just sad)
+		// check here..  if results are 0 then recursive call with ~1
+		// check here and if 0 then try again with ~2
+		// var finalResults []FreeTextResults
+		fmt.Printf("Len: %d    distance: %s \n", qrl, distance)
+		if qrl == 0 {
+			if strings.Contains(distance, "") {
+				fmt.Println("Call ~1")
+				queryResults, err := indexCall(qstring, startAt, "~1")
+				qrl = len(queryResults)
+				if err != nil {
+					log.Print(err)
+				}
+			}
+		}
+		if qrl == 0 {
+			if strings.Contains(distance, "~1") {
+				fmt.Println("Call ~2")
+				queryResults, err := indexCall(qstring, startAt, "~2")
+				qrl = len(queryResults)
+				if err != nil {
+					log.Print(err)
+				}
+			}
+		}
+
+		// if len(results) > 0 {
+		// 	finalResults = results
+		// }
+
+		// Set up some metadata on the search results to return
+		searchmeta.Term = queryterm // We don't use qstring.Query here since we want the full string including qualifiers, returned to the page for rendering with results
+		searchmeta.Count = sr.Total
+		searchmeta.StartAt = startAt
+		searchmeta.EndAt = startAt + 20 // TODO make this a var..   do not set statis!!!!!!
+		searchmeta.NextStart = searchmeta.EndAt + 1
+		searchmeta.PrevStart = searchmeta.StartAt - 20
+		if qrl == 0 {
+			if queryterm == "" {
+				searchmeta.Message = "P418 Search Test"
+
+			} else {
+				searchmeta.Message = "Search results empty"
+			}
+		}
+
+		// If we have a term.. search the triplestore
+		if qrl > 0 {
+			topResult := queryResults[0] // pass this as a new template section TR!
+			fmt.Println(topResult.ID)
+			var err error
+			spres, err = sparql.DoCall(topResult.ID) // turn sparql call on / off
+			if err != nil {
+				log.Printf("SPARQL call failed: %s", err)
+			}
+			// fmt.Print(spres.Description)
+		}
+
+		ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
+		if err != nil {
+			log.Printf("template parse failed: %s", err)
+		}
+
+		err = ht.ExecuteTemplate(w, "Q", searchmeta) //  Section Q sets the navigation elements
+		if err != nil {
+			log.Printf("Template execution failed: %s", err)
+		}
+
+		err = ht.ExecuteTemplate(w, "T", queryResults) // Section T results
+		if err != nil {
+			log.Printf("Template execution failed: %s", err)
+		}
+
+		err = ht.ExecuteTemplate(w, "S", spres) // Section S sets the side bar (not active at this time, only works with RWG results...)
+		if err != nil {
+			log.Printf("Template execution failed: %s", err)
+		}
+
+	} else {
+		ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
+		if err != nil {
+			log.Printf("template parse failed: %s", err)
+		}
+
+		err = ht.ExecuteTemplate(w, "Q", searchmeta) //  Section Q sets the navigation elements
+		if err != nil {
+			log.Printf("Template execution failed: %s", err)
+		}
+
+		err = ht.ExecuteTemplate(w, "T", queryResults) // Section T results
+		if err != nil {
+			log.Printf("Template execution failed: %s", err)
+		}
+
+		err = ht.ExecuteTemplate(w, "S", spres) // Section S sets the side bar (not active at this time, only works with RWG results...)
+		if err != nil {
+			log.Printf("Template execution failed: %s", err)
+		}
 	}
 
-	ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
-	if err != nil {
-		log.Printf("template parse failed: %s", err)
-	}
+	// end of the STUPIDITY...
 
-	err = ht.ExecuteTemplate(w, "Q", searchmeta) //  Section Q sets the navigation elements
-	if err != nil {
-		log.Printf("Template execution failed: %s", err)
-	}
-
-	err = ht.ExecuteTemplate(w, "T", queryResults) // Section T results
-	if err != nil {
-		log.Printf("Template execution failed: %s", err)
-	}
-
-	err = ht.ExecuteTemplate(w, "S", spres) // Section S sets the side bar (not active at this time, only works with RWG results...)
-	if err != nil {
-		log.Printf("Template execution failed: %s", err)
-	}
 }
 
 func parse(qstring string) Qstring {

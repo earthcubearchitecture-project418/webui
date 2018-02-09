@@ -1,12 +1,12 @@
-### webui
+### About
 Repository webui is the web user interface for the Project 418
 
-#### Classic
-The classic style code in here uses simple go http handler function approaches.  
+You can find the UI developed here hosted at http://geodex.org.  Note this site 
+is a simple prototype site.  It is designed more to give an environment to test
+out API and query calls.  These calls access the various indexes that is build 
+from the scheme.org/Dataset structured metadata being harvested.   This harvest is
+done by the crawler code in this repo (https://github.com/earthcubearchitecture-project418/crawler).
 
-#### PWA
-Inside src/* are tests related to a PWA based approach for the Project 418 reference client.
-It will require standard RESTfull service endpoints accessed via XHR calls.   The PWA should 
-also address issues like; push notifications, developer updates (ie, the push notifications), 
-feedback mechanism to allow users to send reports. 
-
+This is not intended to be a generic search tool for geoscientists at this time.  
+Rather it is here to help provide live and controllable feedback to the P418 team 
+to assess elements of resource ranking and recovery by this approach.  
