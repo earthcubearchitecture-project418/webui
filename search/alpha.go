@@ -64,7 +64,8 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// indexes := [6]string{"bco-dmo", "linkedearth", "opencore", "csdco", "rwg", "ieda"}
-	templateFile := "./templates/alphatemplate.html"
+	// templateFile := "./templates/alphatemplate.html"
+	templateFile := "./templates/alphatemplatev2.html"
 
 	// parse the queryterm to get the colon based qualifiers
 	qstring := parse(queryterm)
@@ -127,6 +128,8 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("Template execution failed: %s", err)
 	}
+
+	// need to add in the sidebar info....
 
 	err = ht.ExecuteTemplate(w, "T", orsa) // Section T results
 	if err != nil {

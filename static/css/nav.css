@@ -1,0 +1,87 @@
+/* @import url('https://fonts.googleapis.com/css?family=Ubuntu'); */
+
+nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: minmax(auto, 1fr);
+    grid-gap: 1em;
+    align-items: center;
+    text-align: center;
+    border-bottom: 2px solid black;
+    background: #607d8b;
+    grid-template-areas: 
+	"m1 m2 logo m3 m4";
+}
+
+@media screen and (max-width: 736px) {
+    .m2 { display: none }
+
+    .m3 { display: none; }
+
+    .m4 { display: none; }
+
+    nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* grid-template-rows: minmax(auto, 1fr); */
+        grid-gap: 1em;
+        grid-template-areas: 
+        "logo m1";
+    }
+
+}
+
+.m1 {
+    /* grid-column: 1; */
+    grid-area: m1;
+
+}
+
+.m2 {
+    grid-area: m2;
+
+    /* grid-column: 2; */
+}
+
+.logo {
+    /* grid-column: 3; */
+    grid-area: logo;
+
+    background-image: url("/images/logos/eclogo.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 50px;
+    /* height: 10vh; */
+}
+
+.m3 {
+    grid-area: m3;
+
+    /* grid-column: 4; */
+}
+
+.m4 {
+    grid-area: m4;
+
+    /* grid-column: 5; */
+}
+
+.navLinks {
+    font-family: 'Hack', sans-serif;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+}
+
+.navLinks:hover {
+    color: white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    padding: 1em 1em;
+}
+
+#twist {
+    color: blue;
+}

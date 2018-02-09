@@ -377,6 +377,7 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 	return results, searchResults
 }
 
+// SPARQLDescription call stub
 func SPARQLDescription(subject string) string {
 
 	desc, err := sparql.DescriptionCall(subject) // turn sparql call on / off

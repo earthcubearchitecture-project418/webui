@@ -1,0 +1,94 @@
+/* pill box start */
+
+.pill-box {
+    line-height: 25px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.pill-box-left,
+.pill-box-right {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    color: #666;
+    padding: 2px;
+}
+
+.pill-box-left {
+    background-color: #e6e6e6;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding-left: 6px;
+    text-align: center;
+}
+
+.pill-box-right {
+    background-color: #fff;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-left: 0;
+    padding-left: 4px;
+    padding-right: 6px;
+}
+
+/* blue */
+
+.pill-blue .pill-box-left,
+.pill-blue .pill-box-right {
+    border-color: #4da6ff;
+}
+
+.pill-blue .pill-box-left {
+    background-color: #4da6ff;
+    color: #e5f2ff;
+}
+
+/* red */
+
+.pill-red .pill-box-left,
+.pill-red .pill-box-right {
+    border-color: #ff704d;
+}
+
+.pill-red .pill-box-left {
+    background-color: #ff704d;
+    color: #991f00;
+}
+
+/* green */
+
+.pill-green .pill-box-left,
+.pill-green .pill-box-right {
+    border-color: #70db70;
+}
+
+.pill-green .pill-box-left {
+    background-color: #70db70;
+    color: #ebfaeb;
+}
+
+/* black */
+
+.pill-black .pill-box-left,
+.pill-black .pill-box-right {
+    border-color: #000;
+}
+
+.pill-black .pill-box-left {
+    background-color: #000;
+    color: #fff;
+}
+
+/* purple */
+
+.pill-purple .pill-box-left,
+.pill-purple .pill-box-right {
+    border-color: #db4dff;
+}
+
+.pill-purple .pill-box-left {
+    background-color: #db4dff;
+    color: #fff;
+}
+
+/* pill box end */
