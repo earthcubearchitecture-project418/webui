@@ -59,6 +59,8 @@ html, body {
 
 .footer {
 	grid-area: footer;
+	margin: 25px;
+	text-align: center;
 }
 
 

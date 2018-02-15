@@ -17,7 +17,7 @@ import (
 type OrganicResultsSet struct {
 	OR        []OrganicResults // provider:results
 	HighScore float64          // provider:highestScore
-	Name      string           // ordered string array based on score
+	Index     string           // ordered string array based on score
 	PS        []ParamSet
 	PPLS      []PersonSet
 	GJ        string
@@ -25,10 +25,10 @@ type OrganicResultsSet struct {
 
 // OrganicResults is a place holder struct
 type OrganicResults struct {
-	Position int
-	Index    string
-	Score    float64
-	ID       string
+	Position  int     `json:"position"`
+	IndexPath string  `json:"indexpath"`
+	Score     float64 `json:"score"`
+	ID        string  `json:"URL"`
 }
 
 // ParamSet is the set of parameters associated with the result set

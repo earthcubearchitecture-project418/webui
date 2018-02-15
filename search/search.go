@@ -293,7 +293,13 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 		"read_only": true,
 	})
 	if err != nil {
-		log.Printf("Error with index5 alias: %v", err)
+		log.Printf("Error with index6 alias: %v", err)
+	}
+	index7, err := bleve.OpenUsing("indexes/neotoma.bleve", map[string]interface{}{
+		"read_only": true,
+	})
+	if err != nil {
+		log.Printf("Error with index7 alias: %v", err)
 	}
 
 	var index bleve.IndexAlias
@@ -324,11 +330,15 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 			index = bleve.NewIndexAlias(index5)
 			log.Println("Active index: 6")
 		}
+		if strings.Contains(qstruct.Qualifiers["source"], "neotoma") {
+			index = bleve.NewIndexAlias(index5)
+			log.Println("Active index: 7")
+		}
 	} else {
 		// index = bleve.NewIndexAlias(index1, index2, index3)
 		// log.Println("Active index: 1,2,3")
-		index = bleve.NewIndexAlias(index1, index2, index3, index4, index5, index6) // just use rwg and janus for now in P418
-		log.Println("Active index: 1,2,3,4,5,6")
+		index = bleve.NewIndexAlias(index1, index2, index3, index4, index5, index6, index7) // just use rwg and janus for now in P418
+		log.Println("Active index: 1,2,3,4,5,6,7")
 	}
 
 	log.Printf("Codex index built\n")
@@ -387,6 +397,14 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 		if strings.Contains(item.Index, "rwg") {
 			iconName = "http"                                               // material design icon name used in template  alts:  web_asset or web
 			iconDescription = "source:EarthCube CDF Registry Working Group" // material design icon name used in template  alts:  web_asset or web
+		}
+		if strings.Contains(item.Index, "ieda") {
+			iconName = "http"               // material design icon name used in template  alts:  web_asset or web
+			iconDescription = "source:IEDA" // material design icon name used in template  alts:  web_asset or web
+		}
+		if strings.Contains(item.Index, "neotoma") {
+			iconName = "http"                  // material design icon name used in template  alts:  web_asset or web
+			iconDescription = "source:Neotoma" // material design icon name used in template  alts:  web_asset or web
 		}
 
 		// TODO make a SPARQL call and get the description field and see what we can get
