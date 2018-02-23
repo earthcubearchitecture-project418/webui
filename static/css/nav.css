@@ -2,22 +2,22 @@
 
 nav {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: minmax(auto, 1fr);
-    grid-gap: 1em;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: minmax(auto, 1fr);
+    grid-gap: .5em;
     align-items: center;
     text-align: center;
     border-bottom: 2px solid black;
-    background: #607d8b;
+    background: #6b8ebc;
     grid-template-areas: 
-	"m1 m2 logo m3 m4";
+	"m1 m2 m2plus logo m3minus m3 m4";
 }
 
 @media screen and (max-width: 736px) {
     .m2 { display: none }
-
+    .m2plus { display: none }
+    .m3minus { display: none; }
     .m3 { display: none; }
-
     .m4 { display: none; }
 
     nav {
@@ -32,53 +32,50 @@ nav {
 }
 
 .m1 {
-    /* grid-column: 1; */
     grid-area: m1;
-
 }
 
 .m2 {
     grid-area: m2;
+}
 
-    /* grid-column: 2; */
+.m2plus{
+     grid-area: m2plus;
 }
 
 .logo {
-    /* grid-column: 3; */
     grid-area: logo;
-
     background-image: url("/images/logos/eclogo.png");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     height: 50px;
-    /* height: 10vh; */
+}
+
+.m3minus {
+   grid-area: m3minus;
 }
 
 .m3 {
     grid-area: m3;
-
-    /* grid-column: 4; */
 }
 
 .m4 {
     grid-area: m4;
-
-    /* grid-column: 5; */
 }
 
 .navLinks {
-    font-family: 'Hack', sans-serif;
-    font-size: 1.2em;
+    font-family: 'Calibri', sans-serif;
+    font-size: 1.0em;
     text-transform: uppercase;
     text-decoration: none;
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 .navLinks:hover {
-    color: white;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+    color: #00375e;   
+    /* border-left: .5px solid white; */
+    /* border-right: .5px solid white; */
     padding: 1em 1em;
 }
 

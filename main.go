@@ -16,9 +16,8 @@ type MyServer struct {
 
 func main() {
 	searchroute := mux.NewRouter()
-	// searchroute.HandleFunc("/", search.HoldingPage) // temporary handler for this URL
-	searchroute.HandleFunc("/", search.DoSearch) // the REAL handler for this URL
-	http.Handle("/", searchroute)
+	searchroute.HandleFunc("/zeroth", search.DoSearch) // the REAL handler for this URL
+	http.Handle("/zeroth", searchroute)
 
 	alpha1route := mux.NewRouter()
 	alpha1route.HandleFunc("/alpha", search.Alpha) // the REAL handler for this URL
@@ -44,8 +43,8 @@ func main() {
 	http.Handle("/css/", &MyServer{cssRouter})
 
 	htmlRouter := mux.NewRouter()
-	htmlRouter.PathPrefix("/html/").Handler(http.StripPrefix("/html/", http.FileServer(http.Dir("./static/html"))))
-	http.Handle("/html/", &MyServer{htmlRouter})
+	htmlRouter.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./static/html"))))
+	http.Handle("/", &MyServer{htmlRouter})
 
 	componentRouter := mux.NewRouter()
 	componentRouter.PathPrefix("/components/").Handler(http.StripPrefix("/components/", http.FileServer(http.Dir("./static/components"))))

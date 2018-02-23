@@ -1,313 +1,134 @@
-<!doctype html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>EarthCube P418 About</title>
+    <meta name="viewport" content="width=device-width" initial-scale="1.0">
+    <link rel="stylesheet " href="/css/grid.css ">
+    <link rel="stylesheet " href="/css/nav.css ">
+    <link rel="stylesheet " href="/css/simplegrid.css ">
+
 
     <!-- use hack font -->
-    <link rel='stylesheet' href='//cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
+    <link rel='stylesheet' href='http://cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
-
-    <!-- google icon link -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
-
-    <link rel="shortcut icon" href="images/favicon.png">
-
-    <!-- open search -->
-    <link type="application/opensearchdescription+xml" rel="search" title="EarthCube P418" href="./html/opensearch.xml" />
-
-    <!--  favicon stuff from favicon-generator.org -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <link rel="manifest" href="/html/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- some CSS stuff -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-blue.min.css" />
-    <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        #view-source {
-            position: fixed;
-            display: block;
-            right: 0;
-            bottom: 0;
-            margin-right: 40px;
-            margin-bottom: 40px;
-            z-index: 900;
-        }
-    </style>
-    <style>
-        .centerdiv {
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        BODY {
-            font-family: Hack, monospace;
-        }
-    </style>
-    <style>
-        .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
-            padding-right: 0;
-        }
-    </style>
-    <style>
-        .demo-card-wide.mdl-card {
-            width: 712px;
-        }
-
-        .mdl-layout__content {
-            background: white
-        }
-
-        .mdl-card {
-            background: #eff0f2
-        }
-
-        .mdl-card__media {
-            background: #eff0f2
-        }
-
-        .page-content {
-            background: white
-        }
-
-        .mdl-card__title-text {
-            font-size: 16px;
-        }
-
-        .demo-card-wide>.mdl-card__title {
-            color: #fff;
-            height: 176px;
-            /*background: url('/images/eclogo.png') center / cover;*/
-        }
-
-        .demo-card-wide>.mdl-card__menu {
-            color: #fff;
-        }
-    </style>
-    <style>
-        button.no-style {
-            -webkit-appearance: none;
-            border: 0;
-            padding: 0;
-            background: transparent;
-        }
-    </style>
-    <script type="text/javascript">
-        function submitform() {
-            document.getElementById("formcall").submit(); // Form submission
-        }
-    </script>
-
+    <title>P418 About</title>
 </head>
 
-<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header mdl-layout__header--waterfall">
-            <!-- Top row, always visible -->
-            <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span style="margin-left: 20px" class="mdl-layout-title">P418 </span>
-
-                <div class="mdl-layout-spacer"></div>
-                <div class="mdl-layout-spacer"></div>
-
-                <!-- Navigation -->
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="/">Search</a>
-                    <a class="mdl-navigation__link" href="/html/about.html">About</a>
-                    <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418">GitHub</a>
-                    <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Vocabulary">Vocabulary</a>
-                    <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs/blob/master/publishing.md">Publishing</a>
-                    <a class="mdl-navigation__link" target="_blank" href="/swagger-ui/">APIs</a>
-
-                </nav>
-
-                </nav>
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">P418</span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="/">Search</a>
-                <a class="mdl-navigation__link" href="/html/about.html">About</a>
-                <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418">GitHub</a>
-                <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Vocabulary">Vocabulary</a>
-                <a class="mdl-navigation__link" target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs/blob/master/publishing.md">Publishing</a>
-                <a class="mdl-navigation__link" target="_blank" href="/swagger-ui/">APIs</a>
-
-            </nav>
+<body>
+    <div class="grid ">
+        <div class="title ">
+                <nav class="container">
+                        <div class="m1">
+                            <a href="/" class="navLinks">Home</a>
+                        </div>
+                        <div class="m2">
+                            <a href="/about.html" class="navLinks">About</a>
+                        </div>
+                        <div class="m2plus">
+                            <a href="/data.html" class="navLinks">Data</a>
+                        </div>
+                        <div class="logo">
+                        </div>
+                        <div class="m3minus">
+                            <a target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs" class="navLinks">Docs</a>
+                        </div>
+                        <div class="m3">
+                            <a target="_blank" href="https://github.com/earthcubearchitecture-project418" class="navLinks">GitHub</a>
+                        </div>
+                        <div class="m4">
+                            <a target="_blank" href="/voc/" class="navLinks">Vocab</a>
+                        </div>
+                    </nav>
         </div>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-                <!-- Your content goes here -->
-                <div class="mdl-grid" style="align-items: center; justify-content: center; max-width:80%">
-                    <div class="mdl-cell mdl-cell--5-col">
+        <div class="header">About P418</div>
+        <div class="sidebar">
 
-                        <img style="width:200px" src="/images/geoDex.png">
-                        <p>About Project 418</p>
-
-                    </div>
+        <div class="header ">Provider Gallary</div>                                                                            
+            <div style="margin-top:10px" class="simplesidewrapper">                                                                                     
+             
+              
+                <div class="simplebox a">   <a style="text-decoration: none;" target="_blank" href="https://www.bco-dmo.org">
+                    <img style="max-width:100%" src="/images/logos/bco-dmo-words-BLUE.jpg"> </a>
                 </div>
-
-
-
-                <div class="mdl-grid" style="max-width:750%">
-
-                    Project 418 (named for April 2018 when the project ends) leverages off patterns explored by the EarthCube Council of Data
-                    Facilities (CDF) Registry Working Group (RWG).
-
-                    <p>Some key elements of this approach will include:</p>
-
-                    <span style="font-weight:bold">Leverage web architecture approaches to allow access to self hosted semantic metadata</span>
-
-                    <p>This leverages HTML-5 microdata approaches combined with the schema.org vocabulary extended with community
-                        vocabularies/ontologies following established external vocabulary practices established by the schema.org
-                        governance. </p>
-
-                    <span style="font-weight:bold">Generate indexes of this metadata following web architectural approaches to harvesting </span>
-
-                    <p>Tech notes: The harvesting will follow web architecture practices as well. This leverages hypermedia
-                        patterns that are present as part of the web architecture to provide approaches to navigating networks
-                        of semantic metadata. These indexes would provide textual, spatial and graph representations of the
-                        exposed semantic metadata.</p>
-
-                    <span style="font-weight:bold">Facilities would expose information about data and service resources for the initial phase</span>
-
-                    <p>Tech notes: Key types exposed will include schema.org/DataSet and schema.org/DataCatalog leveraging work
-                        with schema.org led by RPI to establish these key types. Additionally work by the CDF RWG leveraging
-                        re3data resources will provide guidance on exposing information about a facility in general and also
-                        related to service endpoints (RESTful, OGC, others). This will be done following HTML5 microdata
-                        approaches using JSON-LD as a publishing approaches. </p>
+                <div  class="simplebox a">  <a style="text-decoration: none;" target="_blank" href="https://www.iedadata.org/">
+                    <img style="max-width:100%" src="/images/logos/ieda_maplogo.png"> </a>
 
                 </div>
-
-                <div class="mdl-grid" style="max-width:100%">
-
-                    <table border="1">
-                        <th colspan="2">Type Dataset providers</th>
-                        <tr>
-                            <td>BCO-DMO</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/bco-dmo-words-BLUE.jpg">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>IEDA</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/ieda_maplogo.png">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>EarthCube: Linked Earth</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/linkedEarth.jpeg">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Neotoma</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/neotoma.png">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Open Core Data</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/ocd_logo.jpg">
-                            </td>
-                        </tr>
-
-                        <th colspan="2">Currently working with developers toward publication of type Dataset</th>
-                        <tr>
-                            <td>IRIS</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/iris_color_screen_lrg.png">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>EarthCube: CHORDS</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/EarthCubeLogo.png">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>EarthCube: Balto</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/EarthCubeLogo.png">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>EarthRef: MagIC</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/magic.png">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Open Topography</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/opentopo.png">
-                            </td>
-                        </tr>
-
-                        <th colspan="2">Other </th>
-
-                        <tr>
-                            <td>EarthCube CDF: Registry Working Group
-                                <br/> Index of facility metadata</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/EarthCubeLogo.png">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>CSDCO
-                                <br/> Index of drilling projects initially with data to follow</td>
-                            <td>
-                                <img style="height:100px" src="/images/logos/csdco.png">
-                            </td>
-                        </tr>
-                    </table>
-
+                <div  class="simplebox a">  <a style="text-decoration: none;" target="_blank" href="http://linked.earth/">
+                    <img style="max-width:100%" src="/images/logos/linkedEarth.jpeg"></a>
+                </div>
+                <div class="simplebox a">
+                    <img style="max-width:75%" src="/images/logos/neotoma.png"><br>Neotoma
+                </div>
+                <div  class="simplebox a">
+                    <img style="max-width:50%" src="/images/logos/ocd_logo.jpg"><br>Open Core Data
                 </div>
 
+                <div  class="simplebox a"> 
+                    <img style="max-width:100%" src="/images/logos/iris_color_screen_lrg.png">
+                </div>
+                <div  class="simplebox a">CHORDS<br>
+                    <img style="max-width:100%" src="/images/logos/EarthCubeLogo.png">
+                </div>
+                <div  class="simplebox a">Balto<br>
+                    <img style="max-width:100%" src="/images/logos/EarthCubeLogo.png">
+                </div>
 
-            </div>
-        </main>
+                <div class="simplebox a">EarthRef: MagIC<br>
+                    <img style="max-width:100%" src="/images/logos/magic.png">
+                </div>
+                <div  class="simplebox a"> 
+                    <img style="max-width:100%" src="/images/logos/opentopo.png">
+                </div>
+                <div class="simplebox a">CDF: Registry Working Group<br>
+                    <img style="max-width:100%" src="/images/logos/EarthCubeLogo.png">
+                </div>
+                <div  class="simplebox a"> 
+                    <img style="max-width:100%" src="/images/logos/csdco.png">
+                </div>
+                                                                                                   
+        </div>
+
+
+        </div>
+        <div class="content">
+
+                <div class="header">Note:  This is old material...   we plan to update it soon.</div>
+
+
+            <p style="margin-top:20px">
+                Project 418 (named for April 2018 when the project ends) leverages off patterns explored by the EarthCube Council of Data
+                Facilities (CDF) Registry Working Group (RWG).
+            </p>
+            <p style="margin-top:20px">
+                Some key elements of this approach will include: Leverage web architecture approaches to allow access to self hosted semantic
+                metadata
+            </p>
+            <p style="margin-top:20px">
+                This leverages HTML-5 microdata approaches combined with the schema.org vocabulary extended with community vocabularies/ontologies
+                following established external vocabulary practices established by the schema.org governance. Generate indexes
+                of this metadata following web architectural approaches to harvesting
+            </p>
+            <p style="margin-top:20px">
+                Tech notes: The harvesting will follow web architecture practices as well. This leverages hypermedia patterns that are present
+                as part of the web architecture to provide approaches to navigating networks of semantic metadata. These
+                indexes would provide textual, spatial and graph representations of the exposed semantic metadata. Facilities
+                would expose information about data and service resources for the initial phase
+            </p>
+            <p style="margin-top:20px">
+                Tech notes: Key types exposed will include schema.org/DataSet and schema.org/DataCatalog leveraging work with schema.org
+                led by RPI to establish these key types. Additionally work by the CDF RWG leveraging re3data resources will
+                provide guidance on exposing information about a facility in general and also related to service endpoints
+                (RESTful, OGC, others). This will be done following HTML5 microdata approaches using JSON-LD as a publishing
+                approaches.
+            </p>
+
+
+        </div>
+        <div class="footer">
+            <small>Project 418 is funded by the National Science Foundation through the EarthCube Science Support Office (ESSO)</small>
+        </div>
     </div>
 </body>
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </html>

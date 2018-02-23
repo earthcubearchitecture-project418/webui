@@ -56,19 +56,19 @@ type Qstring struct {
 // the search systems.  Once operational we should remove or at least comment
 // out this function.
 // DEPRECATED along with holdingtemplate.html   (re-purpose later for full client side search UI)
-func HoldingPage(w http.ResponseWriter, r *http.Request) {
-	templateFile := "./templates/holdingtemplate.html"
+// func HoldingPage(w http.ResponseWriter, r *http.Request) {
+// 	templateFile := "./templates/holdingtemplate.html"
 
-	ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
-	if err != nil {
-		log.Printf("template parse failed: %s", err)
-	}
+// 	ht, err := template.New("Template").ParseFiles(templateFile) //open and parse a template text file
+// 	if err != nil {
+// 		log.Printf("template parse failed: %s", err)
+// 	}
 
-	err = ht.ExecuteTemplate(w, "Q", nil) //substitute fields in the template 't', with values from 'user' and write it out to 'w' which implements io.Writer
-	if err != nil {
-		log.Printf("Template execution failed: %s", err)
-	}
-}
+// 	err = ht.ExecuteTemplate(w, "Q", nil) //substitute fields in the template 't', with values from 'user' and write it out to 'w' which implements io.Writer
+// 	if err != nil {
+// 		log.Printf("Template execution failed: %s", err)
+// 	}
+// }
 
 // DoSearch is there to do searching..  (famous documentation style intact!)
 func DoSearch(w http.ResponseWriter, r *http.Request) {

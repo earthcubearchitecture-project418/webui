@@ -1,7 +1,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-family: 'Hack', sans-serif;
+	font-family: 'Calibri', sans-serif;
 
 }
 
@@ -75,7 +75,7 @@ html, body {
 @media screen and (min-width: 736px) {
 	.grid {
 		display: grid;
-		grid-template-columns: 10% 1fr 1fr 1fr 200px 10%;
+		grid-template-columns: 10% 1fr 1fr 1fr 20% 10%;
 		grid-template-rows: auto auto 1fr auto;
 		/* grid-template-rows: minmax(auto, 1fr); */
 		grid-template-areas: 
@@ -89,7 +89,8 @@ html, body {
 	}
 	.sidebar {
 		grid-area: sidebar;
-		width: 200px;
+		/* width: 200px; */
+		width: 100%;
 	}
 }
 
