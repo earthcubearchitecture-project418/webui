@@ -7,7 +7,7 @@
     <link rel="stylesheet " href="/css/nav.css ">
     <link rel="stylesheet " href="/css/simplegrid.css ">
 
-    <title>P418</title>
+    <title>GeoDex</title>
 </head>
 
 <body>
@@ -36,28 +36,37 @@
                 </div>
             </nav>
         </div>
-        <div class="header ">Project 418</div>
+        <div class="header ">GeoDex: A Project 418 Implementation</div>
         <div class="sidebar ">
 
-            <div class="header ">Interface Gallary</div>
+            <div class="header ">Interface Gallery</div>
             <div class="simplesidewrapper">
+              
+                <a style="text-decoration:none;" href="/uis/webui2/textSearch.html">
                 <div class="simplebox a">
-                    Coming soon...
-                    <img style="max-width:100%" src="/images/ui.png">
-
+                    Search by text
+                    <img style="max-width:100%" src="/images/textSearch.png">
                 </div>
+                </a>
+
+                <a style="text-decoration:none;" href="/uis/webui2/spatialSearch.html">
+                <div class="simplebox a">
+                    Search by spatial
+                    <img style="max-width:100%" src="/images/spatialSearch.png">
+                </div>
+                </a>
 
 
                 <a style="text-decoration:none;" href="/alpha">
                     <div class="simplebox b">
-                        Alpha Testing
+                        Alpha:  concept testing
                         <img style="max-width:100%" src="/images/a2.png">
                     </div>
                 </a>
 
-                <a target="_blank" style="text-decoration:none;" href="/zeroth">
+                <a style="text-decoration:none;" href="/zeroth">
                     <div class="simplebox c">
-                        Deprecated
+                        Deprecated relevance ranked search
                         <img style="max-width:100%" src="/images/oldUI.png">
                     </div>
                 </a>
@@ -70,7 +79,7 @@
             <div>
                 <p style="margin-top:20px">We are working to incorporate an Open Search connector on this main 
                     page.  We will also provide a search box here that does a redirection to one of the search interfaces.
-                    For now, please look for UIs in the <i>Interface gallary</i> as we work quickly to deploy a new one.
+                    For now, please look for UIs in the <i>Interface gallery</i> as we work quickly to deploy a new one.
                 </p>
             </div>
 
@@ -82,9 +91,9 @@
                         href="/about.html">About section</a>. Second to that would be the web architecture itself which supports the process of
                         publishing and consuming their material.
                 </p>
-                <p style="margin-top:20px"> For further detals on the guiding principles of P418 we suggest the posting by Google:
+                <p style="margin-top:20px"> For further details on the guiding principles of P418 we suggest the posting by Google:
                     <a target="_blank"  href="https://research.googleblog.com/2017/01/facilitating-discovery-of-public.html">
-                        <i>Facilitating the discovery of public datasets </i>
+                        <i>Facilitating the discovery of public data sets </i>
                     </a> by Natasha Noy and Dan Brickley. </p>
                 <p style="margin-top:20px"> We have additionally compiled an initial approach for those interested in publishing structured metadata
                     following this pattern. <a target="_blank"  href="https://github.com/earthcubearchitecture-project418/p418Docs/blob/master/publishing.md">
@@ -93,7 +102,10 @@
 
             </div>
 
-            <div>
+
+            <div style="margin-top:40px">
+                    <div class="header">Data Assay, Notebooks and more...</div>
+
                 <p style="margin-top:20px">
                     <img style="max-width:25px" src="/images/assay.svg">Inspired by the likes of the
                     <a target="_blank" href="http://webdatacommons.org/">Web Data Commons</a>
@@ -104,7 +116,7 @@
 
             <div>
                 <p style="margin-top:20px">
-                    <img style="max-width:25px" src="/images/notebook.svg"> Notebook patterns like Jupyter and R Studio are great ways to work directly with data. Through our web
+                    <img style="max-width:25px" src="/images/notebook.svg"> Additionally, notebooks like Jupyter and R Studio are great ways to work directly with data. Through our web
                     services and via index downloads we are working on
                     <a target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Notebooks"> example notebooks </a>to share with the community. </p>
             </div>
@@ -112,13 +124,13 @@
 
             <div>
                 <p style="margin-top:20px">
-                    <img style="max-width:75px" src="/images/fc.png"> P418 is discussing testing our web services to meet itnerface patters for the
+                    <img style="max-width:75px" src="/images/fc.png"> P418 is discussing testing our web services to meet interface patters for the
                     <a target="_blank" href="http://fc.umn.edu/">Flyover country app</a> . We are interested in all external parties that would wish to leverage the material
                     our partners expose.
                 </p>
 
                 <p style="margin-top:20px"> Note, the pattern P418 uses is entirely web architecture based. You don't need us to use it and we are happy
-                    to help explain how this approach dissintermediates such patterns and allows direct connection to the
+                    to help explain how this approach dis-intermediates such patterns and allows direct connection to the
                     data facilities. </p>
             </div>
 

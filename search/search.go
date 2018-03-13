@@ -355,7 +355,7 @@ func indexCall(qstruct Qstring, startAt uint64, distance string) ([]FreeTextResu
 	search.Highlight = bleve.NewHighlightWithStyle("html") // need Stored and IncludeTermVectors in index
 	searchResults, err := index.Search(search)
 	if err != nil {
-		log.Printf("Error search results: %v  , %s", err, search)
+		log.Printf("Error search results: %v  , %v", err, search)
 	}
 
 	hits := searchResults.Hits // array of struct DocumentMatch

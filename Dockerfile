@@ -1,5 +1,5 @@
 # Start from scratch image and add in a precompiled binary
-# CGO_ENABLED=0 env GOOS=linux go build .
+# CGO_ENABLED=0 env go build .
 # docker build -t earthcube/p418webui:latest -t earthcube/p418webui:0.0.4 .
 # docker run -d -p 9900:9900  opencoredata/ocdweb:0.0.1
 FROM scratch
@@ -8,6 +8,8 @@ FROM scratch
 ADD webui /
 ADD ./templates  /templates
 ADD ./static /static
+ADD ./uis /uis  
+#  NOTE.. content for /uis will be mounted in the compose file via datavolume
 # do this as a data mount now.. indexes are large
 # ADD ./indexes  /indexes 
 

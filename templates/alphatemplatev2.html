@@ -7,6 +7,9 @@
 	<link rel="stylesheet " href="/css/grid.css ">
 	<link rel="stylesheet " href="/css/nav.css ">
 	<link rel="stylesheet " href="/css/pillbox.css ">
+    <link rel="stylesheet " href="/css/pillwrapper.css ">
+    <link rel="stylesheet " href="/css/leafletcustom.css ">
+
 
 	<!-- use hack font -->
     <link rel='stylesheet' href='http://cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
@@ -26,22 +29,28 @@
 <body>
 	<div class="grid ">
 		<div class="title ">
-			<nav class="container">
-				<div class="m1">
-					<a href="/" class="navLinks">Home</a>
-				</div>
-				<div class="m2">
-					<a href="/html/about.html" class="navLinks">About</a>
-				</div>
-				<div class="logo">
-				</div>
-				<div class="m3">
-					<a target="_blank" href="https://github.com/earthcubearchitecture-project418" class="navLinks">GitHub</a>
-				</div>
-				<div class="m4">
-					<a target="_blank" href="/voc/" class="navLinks">Vocabularies</a>
-				</div>
-			</nav>
+                <nav class="container">
+                        <div class="m1">
+                            <a href="/" class="navLinks">Home</a>
+                        </div>
+                        <div class="m2">
+                            <a href="/about.html" class="navLinks">About</a>
+                        </div>
+                        <div class="m2plus">
+                            <a href="/data.html" class="navLinks">Data</a>
+                        </div>
+                        <div class="logo">
+                        </div>
+                        <div class="m3minus">
+                            <a target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs" class="navLinks">Docs</a>
+                        </div>
+                        <div class="m3">
+                            <a target="_blank" href="https://github.com/earthcubearchitecture-project418" class="navLinks">GitHub</a>
+                        </div>
+                        <div class="m4">
+                            <a target="_blank" href="/voc/" class="navLinks">Vocab</a>
+                        </div>
+                    </nav>
 		</div>
 		<div class="header ">
 
@@ -64,7 +73,8 @@
         </div>
 		<div class="sidebar ">
                 <p style="margin-top: 25px">
-                       There is a LOT broke here..  the maps don't work (and don't even show in mobile mode), it doesn't move to the next set of results (ie, 21-40 in the default case), and there is more.  We're on it!
+                       There is a LOT broke here..  the maps have a bug and there are some other hidden "features" 
+                         We're on it!
                       </p>
 
 
@@ -84,16 +94,26 @@
             </span>
             <div class="wrapper"  style="padding-bottom: 25px">
                 <div class="one">
-                    {{range $item := $loop.OR}} {{$item.Position}}:
-                    <a class="resultlink" target="_blank" href="{{$item.ID}}">{{$item.ID}}</a>
-                    <span class="scorereport"><small>{{$item.Score}}</small></span> 
-                    <br> {{end}}
+                    {{range $item := $loop.OR}} 
+                    <!-- {{$item.Position}}: -->
+                    <!-- <a class="resultlink" target="_blank" href="{{$item.ID}}">{{$item.ID}}</a><span class="scorereport"><small>{{$item.Score}}</small></span>  -->
+
+                    <div class="pillwrapper">
+                       
+                     
+                        <div class="itemlink"> <a class="resultlink" target="_blank" href="{{$item.ID}}">{{$item.ReverseID}}...</a></div>
+                        <div class="itemscore">{{$item.Score}}</div> 
+                        <div class="itemdata">Data || DOI</div>
+                      </div>
+                      
+
+                     {{end}}
                 </div>
                 <div class="two">
 
 
                     <!-- <leaflet-map style="margin:4px;height:200px;width:200px" fitToMarkers="true" zoom="1"> -->
-                    <leaflet-map style="height:100%;min-height: 250px;" fitToMarkers="true" zoom="2">
+                    <leaflet-map style="height:100%;min-height: 250px;" fit-to-markers>
                         <leaflet-tilelayer url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}" max-zoom="13">
                             Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri
                         </leaflet-tilelayer>
@@ -101,11 +121,7 @@
                             <leaflet-geojson color="#FF0000" data="[[data]]"></leaflet-geojson>
                             <script>
                                 var t = document.getElementById('{{$loop.Index}}lmap');
-                                t.data = {
-                                    {
-                                        $loop.GJ
-                                    }
-                                };
+                                t.data = {{$loop.GJ}};
                             </script>
                         </template>
                     </leaflet-map>

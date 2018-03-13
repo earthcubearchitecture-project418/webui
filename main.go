@@ -46,6 +46,11 @@ func main() {
 	htmlRouter.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./static/html"))))
 	http.Handle("/", &MyServer{htmlRouter})
 
+	// UI router (testing)
+	uisRouter := mux.NewRouter()
+	uisRouter.PathPrefix("/uis/").Handler(http.StripPrefix("/uis/", http.FileServer(http.Dir("./uis"))))
+	http.Handle("/uis/", &MyServer{uisRouter})
+
 	componentRouter := mux.NewRouter()
 	componentRouter.PathPrefix("/components/").Handler(http.StripPrefix("/components/", http.FileServer(http.Dir("./static/components"))))
 	http.Handle("/components/", &MyServer{componentRouter})

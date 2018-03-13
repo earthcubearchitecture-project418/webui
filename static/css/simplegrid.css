@@ -25,7 +25,16 @@
   text-align: center;
 }
 
+.typedataset {
+  background-color: white;
+  border:3px solid green;
+}
+
+.typeinprogress {
+  background-color: white;
+  border:3px solid orange;
+}
+
 .a {
   margin-top: 20px;
-
 }

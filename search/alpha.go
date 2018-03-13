@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"text/template"
@@ -29,6 +30,7 @@ type OrganicResults struct {
 	IndexPath string  `json:"indexpath"`
 	Score     float64 `json:"score"`
 	ID        string  `json:"URL"`
+	ReverseID string  `json:"reverseURL"`
 }
 
 // ParamSet is the set of parameters associated with the result set
@@ -87,7 +89,7 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 	searchmeta.Message = ""
 
 	// get the resources
-	resp := getByQuery(qstring.Query) // not using the qualifiers at this time
+	resp := getByQuery(qstring.Query, startAt) // not using the qualifiers at this time
 	var orsa []OrganicResultsSet
 	if err := json.Unmarshal([]byte(resp), &orsa); err != nil {
 		log.Println(err)
@@ -96,8 +98,13 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 	// loop on orsa..  and sent the or array to each query to populate the params, people and geojson then for it...
 	// find prams based on resource set
 	for item := range orsa {
-		or := orsa[item].OR
-		// just want the string array of ID's  (make a small function for this)
+		or := orsa[item].OR // just want the string array of ID's  (make a small function for this)  resAsJSON()
+
+		// Add reverse URL to the struct
+		for entry := range or {
+			or[entry].ReverseID = reverseURL(or[entry].ID)
+		}
+
 		params := paramsBySet(resAsJSON(or))
 		var p []ParamSet
 		if err := json.Unmarshal([]byte(params), &p); err != nil {
@@ -140,10 +147,9 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 
 // try https://github.com/go-resty/resty
 
-// get the initial JSON set of URI based on the
-// organic search
-func getByQuery(query string) string {
-	urlstring := fmt.Sprintf("http://geodex.org/api/v1/textindex/searchset?q=%s&n=20&s=0", query)
+// get the initial JSON set of URI based on the organic search
+func getByQuery(query string, startAt uint64) string {
+	urlstring := fmt.Sprintf("http://geodex.org/api/v1/textindex/searchset?q=%s&n=20&s=%d", query, startAt)
 	resp, err := resty.R().Get(urlstring)
 	if err != nil {
 		log.Println(err)
@@ -158,6 +164,7 @@ func geoJSONBySet(ja string) string {
 			"body": ja,
 		}).
 		Post("http://geodex.org/api/v1/spatial/search/resourceset")
+		// Post("http://geodex.org/api/v1/spatial/search/resourceset")
 	if err != nil {
 		log.Print(err)
 	}
@@ -226,4 +233,29 @@ func resAsJSON(a []OrganicResults) string {
 
 	// return string(resJSON)
 	return fmt.Sprint(&buf)
+}
+
+func reverseURL(a string) string {
+	u, err := url.Parse(a)
+	if err != nil {
+		panic(err)
+	}
+
+	pa := strings.Split(u.Path, "/")
+
+	var buffer bytes.Buffer
+	for j := len(pa) - 1; j > 0; j-- {
+		buffer.WriteString(pa[j])
+		buffer.WriteString("/")
+	}
+
+	return fmt.Sprintln(short(buffer.String(), 27))
+}
+
+func short(s string, i int) string {
+	runes := []rune(s)
+	if len(runes) > i {
+		return string(runes[:i])
+	}
+	return s
 }
