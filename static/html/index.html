@@ -6,7 +6,51 @@
     <link rel="stylesheet " href="/css/grid.css ">
     <link rel="stylesheet " href="/css/nav.css ">
     <link rel="stylesheet " href="/css/simplegrid.css ">
-
+    <script type="application/ld+json">
+    {
+        "@context": {
+          "@vocab": "http://schema.org/"
+        },
+        "@type": ["Service", "Organization"],
+        "legalName": "Project 418",
+        "name": "Project 418",
+        "url": "https://www.geodex.org",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "http://geodex.org/images/logos/eclogo.png"
+        },
+        "funder": {
+          "@type": "Organization",
+          "@id": "http://dx.doi.org/10.13039/100000001",
+          "legalName": "National Science Foundation",
+          "alternateName": "NSF",
+          "url": "http://www.nsf.gov",
+          "identifier": {
+            "@type": "PropertyValue",
+            "propertyID": "http://purl.org/spar/datacite/doi",
+            "value": "10.13039/100000001",
+            "url": "https://doi.org/10.13039/100000001"
+          }
+        },
+        "availableChannel": [
+            {
+                "@type": "ServiceChannel",
+                "serviceUrl": "http://geodex.org/apidocs.json",
+                "name": "Swagger API Service",
+                "providesService": {
+                    "@type": "Service",
+                    "name": "API",
+                    "description": "Search for organizations and datasets"
+                },
+                "subjectOf": {
+                  "@type": "DigitalDocument",
+                  "name": "Swagger Document",
+                  "url": "http://geodex.org/apidocs.json"
+                }
+            }
+        ]
+      }
+    </script>
     <title>GeoDex</title>
 </head>
 
