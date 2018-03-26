@@ -24,7 +24,12 @@
     <link rel="import" href="/components/leaflet-element/bower_components/leaflet-map/leaflet-map.html">
 
 
-    <title>P418 Alpha 2 User Interface</title>
+    <title>P418 Data Set</title>
+
+    <script type="appplication/ld+json">
+        {{.So}}
+    </script>
+
 </head>
 
 <body>
@@ -59,18 +64,23 @@
 
         </div>
         <div class="sidebar ">
+
             <p style="margin-top: 25px">
-                Sidebar
+                  <a href="{{.Dl}}">Data set download (format Frictionless Data Package)</a>
             </p>
 
 
+            <p style="margin-top: 25px">
+                This page is completely generated from the content of the data package. It is very basic at this time but will evolve to
+                include license and other information pulled from the schema.org and presented as part of this landing page.
+            </p>
 
         </div>
         <div class="content ">
 
-            <p>Content div {{.}}</p>
-
-
+         <pre>
+{{.Rm}}
+         </pre>
 
         </div>
         <div class="footer">
