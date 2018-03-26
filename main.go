@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"earthcube.org/Project418/webui/landingpages"
 	"earthcube.org/Project418/webui/search"
 
 	"github.com/gorilla/mux"
@@ -29,6 +30,14 @@ func main() {
 	// robotRouter := mux.NewRouter()
 	// robotRouter.Path("/robots.txt").Handler(http.ServeFile(http.Dir("./static")))
 	// http.Handle("/robots.txt", &MyServer{robotRouter})
+
+	lp := mux.NewRouter()
+	lp.HandleFunc("/id/datapackage/{id}", landingpages.LandingPage) // the REAL handler for this URL
+	http.Handle("/id/datapackage/", lp)
+
+	dc := mux.NewRouter()
+	dc.HandleFunc("/data/catalog", landingpages.Catalog) // the REAL handler for this URL
+	http.Handle("/data/", dc)
 
 	swaggerui := mux.NewRouter()
 	swaggerui.PathPrefix("/swagger-ui/").Handler(http.StripPrefix("/swagger-ui/", http.FileServer(http.Dir("./static/swagger-ui"))))
