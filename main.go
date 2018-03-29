@@ -39,6 +39,10 @@ func main() {
 	dc.HandleFunc("/data/catalog", landingpages.Catalog) // the REAL handler for this URL
 	http.Handle("/data/", dc)
 
+	dp := mux.NewRouter()
+	dp.PathPrefix("/datapackages/").Handler(http.StripPrefix("/datapackages/", http.FileServer(http.Dir("./static/datapackages"))))
+	http.Handle("/datapackages/", &MyServer{dp})
+
 	swaggerui := mux.NewRouter()
 	swaggerui.PathPrefix("/swagger-ui/").Handler(http.StripPrefix("/swagger-ui/", http.FileServer(http.Dir("./static/swagger-ui"))))
 	http.Handle("/swagger-ui/", &MyServer{swaggerui})
