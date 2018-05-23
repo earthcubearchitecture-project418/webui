@@ -24,6 +24,10 @@ func main() {
 	alpha1route.HandleFunc("/alpha", search.Alpha) // the REAL handler for this URL
 	http.Handle("/alpha", alpha1route)
 
+	alphasroute := mux.NewRouter()
+	alphasroute.HandleFunc("/alphasingle", search.AlphaSingle) // the REAL handler for this URL
+	http.Handle("/alphasingle", alphasroute)
+
 	// THIS IS CRAP!!!!  fix this...
 	// A one off route for robots...  need to fix this code so the search route is only take when
 	// there is a ?q= match...  and all static files addressed by ONE router

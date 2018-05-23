@@ -22,6 +22,7 @@ type OrganicResultsSet struct {
 	PS        []ParamSet
 	PPLS      []PersonSet
 	GJ        string
+	Term      string
 }
 
 // OrganicResults is a place holder struct
@@ -57,6 +58,7 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 	log.Printf("r path: %s\n", r.URL.Query()) // need to log this better so I can filter out search terms later
 	queryterm := r.URL.Query().Get("q")
 	queryterm = strings.TrimSpace(queryterm) // remove leading and trailing white spaces a user might put in (not internal spaces though)
+	index := r.URL.Query().Get("i")
 
 	// get the start at value or set to 0
 	var startAt uint64
@@ -89,7 +91,7 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 	searchmeta.Message = ""
 
 	// get the resources
-	resp := getByQuery(qstring.Query, startAt) // not using the qualifiers at this time
+	resp := getByQuery(qstring.Query, index, startAt) // not using the qualifiers at this time
 	var orsa []OrganicResultsSet
 	if err := json.Unmarshal([]byte(resp), &orsa); err != nil {
 		log.Println(err)
@@ -122,6 +124,8 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 		gj := geoJSONBySet(resAsJSON(or))
 		orsa[item].GJ = gj
 
+		orsa[item].Term = queryterm
+
 		log.Println(item)
 		log.Println(gj)
 	}
@@ -148,9 +152,16 @@ func Alpha(w http.ResponseWriter, r *http.Request) {
 // try https://github.com/go-resty/resty
 
 // get the initial JSON set of URI based on the organic search
-func getByQuery(query string, startAt uint64) string {
-	urlstring := fmt.Sprintf("http://geodex.org/api/v1/textindex/searchset?q=%s&n=20&s=%d", query, startAt)
-	resp, err := resty.R().Get(urlstring)
+func getByQuery(query, index string, startAt uint64) string {
+	// urlstring := fmt.Sprintf("http://geodex.org/api/v1/textindex/searchset?q=%s&n=20&s=%d", query, startAt)
+	resp, err := resty.R().
+		SetQueryParams(map[string]string{
+			"q": query,
+			"n": "20",
+			"s": strconv.FormatUint(startAt, 16),
+			"i": index,
+		}).
+		Get("http://geodex.org/api/v1/textindex/searchset")
 	if err != nil {
 		log.Println(err)
 	}
@@ -164,7 +175,6 @@ func geoJSONBySet(ja string) string {
 			"body": ja,
 		}).
 		Post("http://geodex.org/api/v1/spatial/search/resourceset")
-		// Post("http://geodex.org/api/v1/spatial/search/resourceset")
 	if err != nil {
 		log.Print(err)
 	}

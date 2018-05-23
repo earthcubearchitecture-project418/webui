@@ -8,7 +8,7 @@ FROM scratch
 ADD webui /
 ADD ./templates  /templates
 ADD ./static /static
-ADD ./uis /uis  
+#ADD ./uis /uis  
 #  NOTE.. content for /uis will be mounted in the compose file via datavolume
 # do this as a data mount now.. indexes are large
 # ADD ./indexes  /indexes 

@@ -1,0 +1,32 @@
+{
+  "name": "p418spatial",
+  "title": "Project 418 Spatial Data from Data Facility Providers",
+  "licenses": [{
+    "id": "CC0-1.0",
+    "title": "CC0 1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+  }],
+  "resources": [{
+      "path": "metadata/schemaorg.json",
+      "format": "application/ld+json",
+      "name": "schemaorg"
+    },
+    {
+      "path": "README.md",
+      "format": "text/markdown",
+      "name": "readme"
+    },
+    {
+      "name": "querylog",
+      "path": "data/services.log.gz",
+      "format": "json",
+      "mediatype": "application/json",
+      "encoding": "utf-8",
+      "licenses": [{
+        "id": "CC0-1.0",
+        "title": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }]
+    }
+  ]
+}

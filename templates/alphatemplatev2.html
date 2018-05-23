@@ -37,7 +37,7 @@
                             <a href="/about.html" class="navLinks">About</a>
                         </div>
                         <div class="m2plus">
-                            <a href="/data.html" class="navLinks">Data</a>
+                            <a href="/data/catalog" class="navLinks">Data</a>
                         </div>
                         <div class="logo">
                         </div>
@@ -57,8 +57,9 @@
 
             <form id="formcall" action="/alpha" method="GET">
                 <div>
-                    <input style="width:300px" type="text" name="q" value="{{.Term}}" id="q">
-                    <label  for="sample3">  <i style="font-size:24px" class="material-icons">search</i>  </label>
+                    <input style="width:300px" type="text" name="q" value="{{.Term}}" id="q"> 
+		    <a target="_blank" href="./alphasingle?q={{.Term}}">ungroup results</a>
+		    <label  for="sample3">  <!-- <i style="font-size:24px" class="material-icons">search</i>i -->  </label>
                 </div>
             </form>
             <div>
@@ -73,22 +74,22 @@
         </div>
 		<div class="sidebar ">
                 <p style="margin-top: 25px">
-                       There is a LOT broke here..  the maps have a bug and there are some other hidden "features" 
-                         We're on it!
+                       Sidebar  
+                      
                       </p>
 
 
             <p style="margin-top: 25px">
               This sidebar section is reserved for presenting the user with material from third parties related to 
-              the results of the search.  View the concepts for this in Footnote 6 and Footnote 7 at 
-              <a href="https://github.com/earthcubearchitecture-project418/p418Docs/blob/master/status.md">this github markdown page.</a>
+              the results of the search.  View the concepts for this in Footnote 6 and Footnote 7 in 
+              <a href="https://github.com/earthcubearchitecture-project418/p418Docs/blob/master/status.md">these documentation pages.</a>
             </p>
 
         </div>
 		<div class="content ">
 
             {{range $loop := .}}
-            <span> {{$loop.Index}}</span>
+	    <span> {{$loop.Index}} (<a target="_blank" href="./alphasingle?q={{$loop.Term}}&i={{$loop.Index}}">provider results</a>) </span>
             <span style=" padding-left:100px; ">
                 <span class="scorereport"><small>{{$loop.HighScore}}</small></span>
             </span>
@@ -103,7 +104,7 @@
                      
                         <div class="itemlink"> <a class="resultlink" target="_blank" href="{{$item.ID}}">{{$item.ReverseID}}...</a></div>
                         <div class="itemscore">{{$item.Score}}</div> 
-                        <div class="itemdata">Data || DOI</div>
+                        <div class="itemdata"><a href=http://geodex.org/api/v1/graph/details?r={{$item.ID}}>Details</a></div>
                       </div>
                       
 
