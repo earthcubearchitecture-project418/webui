@@ -2,5 +2,5 @@
 <ShortName>earthcube-p418</ShortName>
 <Description>Search EarthCube P418</Description>
 <Image height="16" width="16" type="image/vnd.microsoft.icon">http://geodex.org/images/favicon.ico</Image>
-<Url type="text/html" template="http://geodex.org/?q={searchTerms}"/>
+<Url type="text/html" template="http://geodex.org/alpha?q={searchTerms}"/>
 </OpenSearchDescription>
