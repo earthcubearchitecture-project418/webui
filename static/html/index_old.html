@@ -1,0 +1,142 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" initial-scale="1.0">
+    <link rel="stylesheet " href="/css/grid.css ">
+    <link rel="stylesheet " href="/css/nav.css ">
+    <link rel="stylesheet " href="/css/simplegrid.css ">
+
+      <!-- open search -->
+      <link type="application/opensearchdescription+xml" rel="search" title="EarthCube P418 GeoDex" href="./opensearch.xml" />
+
+
+    <script type="application/ld+json">
+    {
+        "@context": {
+          "@vocab": "http://schema.org/"
+        },
+        "@type": ["Service", "Organization"],
+        "legalName": "Project 418",
+        "name": "Project 418",
+        "url": "https://www.geodex.org",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "http://geodex.org/images/logos/eclogo.png"
+        },
+        "funder": {
+          "@type": "Organization",
+          "@id": "http://dx.doi.org/10.13039/100000001",
+          "legalName": "National Science Foundation",
+          "alternateName": "NSF",
+          "url": "http://www.nsf.gov",
+          "identifier": {
+            "@type": "PropertyValue",
+            "propertyID": "http://purl.org/spar/datacite/doi",
+            "value": "10.13039/100000001",
+            "url": "https://doi.org/10.13039/100000001"
+          }
+        },
+        "availableChannel": [
+            {
+                "@type": "ServiceChannel",
+                "serviceUrl": "http://geodex.org/apidocs.json",
+                "name": "Swagger API Service",
+                "providesService": {
+                    "@type": "Service",
+                    "name": "API",
+                    "description": "Search for organizations and datasets"
+                },
+                "subjectOf": {
+                  "@type": "DigitalDocument",
+                  "name": "Swagger Document",
+                  "url": "http://geodex.org/apidocs.json"
+                }
+            }
+        ]
+      }
+    </script>
+    <title>GeoDex</title>
+</head>
+
+<body>
+    <div class="grid ">
+        <div class="title ">
+            <nav class="container">
+                <div class="m1">
+                    <a href="/" class="navLinks">Home</a>
+                </div>
+                <div class="m2">
+                    <a href="/about.html" class="navLinks">About</a>
+                </div>
+                <div class="m2plus">
+                    <a href="/data/catalog" class="navLinks">Data</a>
+                </div>
+                <div class="logo">
+                </div>
+                <div class="m3minus">
+                    <a target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs" class="navLinks">Docs</a>
+                </div>
+                <div class="m3">
+                    <a target="_blank" href="https://github.com/earthcubearchitecture-project418" class="navLinks">GitHub</a>
+                </div>
+                <div class="m4">
+                    <a target="_blank" href="/voc/" class="navLinks">Vocab</a>
+                </div>
+            </nav>
+        </div>
+        <div class="header"><b>GeoDex: A Project 418 Implementation</b></div>
+        <div class="sidebar ">
+
+            <div class="header"><b>Interface Gallery</b></div>
+            <div class="simplesidewrapper">
+              
+                <a style="text-decoration:none;" href="/uis/webui2/textSearch.html">
+                <div class="simplebox a">
+                    Search by text
+                    <img style="max-width:75%;filter: drop-shadow(0 0 0.75rem #6b8ebc);" src="/images/textSearch.png">
+                </div>
+                </a>
+
+                <a style="text-decoration:none;" href="/uis/webui2/spatialSearch.html">
+                <div class="simplebox a">
+                    Search by spatial
+                    <img style="max-width:75%;filter: drop-shadow(0 0 0.75rem #6b8ebc);" src="/images/spatialSearch.png">
+                </div>
+                </a>
+
+
+                <a style="text-decoration:none;" href="/alpha">
+                    <div class="simplebox b">
+                        Alpha:  concept testing
+                        <img style="max-width:75%;filter: drop-shadow(0 0 0.75rem #6b8ebc);" src="/images/a2.png">
+                    </div>
+                </a>
+
+                <a style="text-decoration:none;" href="/alphasingle">
+                    <div class="simplebox c">
+                        Alpha:  un-threaded (single) result view
+                        <img style="max-width:75%;filter: drop-shadow(0 0 0.75rem #6b8ebc);" src="/images/alphasingle.png">
+                    </div>
+                </a>
+
+            </div>
+
+        </div>
+        <div class="content">
+
+
+            <p>Home of the new string literal search UI</p>
+          
+
+      
+        </div>
+        <div class="footer ">
+
+            <small>Project 418 is funded by the National Science Foundation through the EarthCube Science Support Office (ESSO)</small>
+
+        </div>
+    </div>
+</body>
+
+</html>

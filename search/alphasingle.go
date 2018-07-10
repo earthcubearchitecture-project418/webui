@@ -32,8 +32,15 @@ func AlphaSingle(w http.ResponseWriter, r *http.Request) {
 	templateFile := "./templates/alphasingletemplate.html"
 
 	// parse the queryterm to get the colon based qualifiers
-	qstring := parse(queryterm)
 	distance := ""
+	qp, i := getIndex(queryterm)
+
+	queryterm = qp //  this is just sad..  there is a better way to do this!
+	index = i
+
+	qstring := parse(queryterm)
+	log.Println(qstring.Qualifiers)
+	// look in queryterm for an index...
 
 	fmt.Printf("qstring: %s   distance: %s\n", qstring, distance)
 
@@ -44,7 +51,7 @@ func AlphaSingle(w http.ResponseWriter, r *http.Request) {
 	searchmeta.Term = queryterm // We don't use qstring.Query here since we want the full string including qualifiers, returned to the page for rendering with results
 	searchmeta.Count = uint64(countHolder)
 	searchmeta.StartAt = startAt
-	searchmeta.EndAt = startAt + 50 // TODO make this a var..   do not set statis!!!!!!
+	searchmeta.EndAt = startAt + 50 // TODO make this a var..   why is this not a var!
 	searchmeta.NextStart = searchmeta.EndAt + 1
 	searchmeta.PrevStart = searchmeta.StartAt - 50
 
@@ -96,4 +103,25 @@ func getSingleByQuery(query, index string, startAt uint64) string {
 	}
 
 	return resp.String()
+}
+
+func getIndex(q string) (string, string) {
+	// token string on spaces
+	qs := strings.Split(q, " ")
+	index := ""
+	// check each string for a token
+	for i := range qs {
+		if strings.Contains(qs[i], "index:") {
+			is := strings.Split(qs[i], ":")
+			index = is[1] // get the second index item which would be the index:value value we are after
+			// remove from qs index
+			// qs = removeIndex(qs, i)  // current UI doesn't work correctly with this action..  it should
+		}
+	}
+
+	return strings.Join(qs, " "), index
+}
+
+func removeIndex(s []string, index int) []string {
+	return append(s[:index], s[index+1:]...)
 }

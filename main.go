@@ -59,6 +59,10 @@ func main() {
 	cssRouter.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))
 	http.Handle("/css/", &MyServer{cssRouter})
 
+	jsRouter := mux.NewRouter()
+	jsRouter.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("./static/js"))))
+	http.Handle("/js/", &MyServer{jsRouter})
+
 	htmlRouter := mux.NewRouter()
 	htmlRouter.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./static/html"))))
 	http.Handle("/", &MyServer{htmlRouter})

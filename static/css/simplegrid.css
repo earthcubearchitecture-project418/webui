@@ -17,7 +17,7 @@
 }
 
 .simplebox {
-  background-color: rgba(153, 153, 153, 0.267);
+  background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
   border-radius: 5px;
   padding: 20px;
