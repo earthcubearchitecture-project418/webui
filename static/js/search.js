@@ -27,6 +27,14 @@ const greeting2 = (barval) => {
 		`;
 };
 
+const activesearch = () => {
+	console.log("There is an active search underway..  waiting for response")
+
+	return html `
+	<div class="loader">Loading...</div>
+		`;
+}
+
 // lit-html constant
 const providerTemplate = (barval) => {
 	console.log("-----------------------------------------------")
@@ -159,7 +167,26 @@ const navui = (total_hits) => {
 // lit-html constant
 const nusearch = (barval, q) => {
 	console.log("nusearchtemplate-----------------------------------------------")
+
+	// At this point we need to see if barval.search.hits is undefined
+
+	if (typeof barval.search_result.hits === "undefined") {
+		return html `<div style="text-align:center;margin-top:50px;position:relative"> 
+			<img style="margin-left:40px;height:40px" src="./images/broken.png">
+			<br>  Sorry, something went wrong... please try the search again</div>`;
+	}
+
 	var count = Object.keys(barval.search_result.hits).length;
+
+	// At this point we need to see if count is 0 and do something about it.
+	if (count < 1) {
+		return html `<div style="text-align:center;margin-top:50px;position:relative"> 
+			<img style="margin-left:40px;height:40px" src="./images/empty.png">
+			<br>  Sorry, in the scope of items indexed there are no results.</div>`;
+	}
+
+
+
 	const itemTemplates = [];
 
 
@@ -191,7 +218,7 @@ const nusearch = (barval, q) => {
 			haspartTemplates.push(html `<span style="margin:5px"><a target="_blank" href="${element}">${element} <a/></span>`)
 		});
 
-		detailsdom = (html `<details><summary>Related parts</summary>${haspartTemplates}</details><br>`)
+		detailsdom = (html `<details><summary>Related parts</summary>${haspartTemplates}</details>`)
 		return detailsdom;
 	}
 
@@ -208,11 +235,12 @@ const nusearch = (barval, q) => {
 
 		var elements = barval.search_result.hits[i].fields["variableMeasured.name"]
 		// var elurl = barval.search_result.hits[i].fields["variableMeasured.url"]
-		elements.forEach(function (element) {
-			haspartTemplates.push(html `<span style="margin:5px">${element} </span>`)
-		});
-
-		detailsdom = (html `<details><summary>Variables measured</summary>${haspartTemplates}</details><br>`)
+		if (elements != null) {
+			elements.forEach(function (element) {
+				haspartTemplates.push(html `<span style="margin:5px">${element} </span>`)
+			});
+			detailsdom = (html `<details><summary>Variables measured</summary>${haspartTemplates}</details><br>`)
+		}
 		return detailsdom;
 	}
 
@@ -338,27 +366,19 @@ const nusearch = (barval, q) => {
 		var vm = hasVarMeasuredName(`${barval.search_result.hits[i].fields["variableMeasured.@type"]}`, i)
 
 
-		// Main Item template
-		itemTemplates.push(html `<div style="margin-top:15px">
+		// Main Item div template
+		itemTemplates.push(html `<div class="resultitem" style="margin-top:15px">
 		<a target="_blank" href="${barval.search_result.hits[i].fields.p418url}">${name}</a>
 		  <br/>
 			<img style="height:20px" src="${barval.search_result.hits[i].fields.p418logo}">
-			
-			
 			${filterTemplates}
-		 
 			${dataDownloadTemplates}
-
-			
 			<br/>
 	     <span> ${shortdesc}... </span>
 		 <br/>
 		 ${hpat} 
 		 ${vm}
-	
 		<span style="font-size: smaller;" >(${barval.search_result.hits[i].score}) <span> </div>`);
-
-
 	}
 
 	return html `
@@ -402,6 +422,7 @@ const query1 = (q, n, s) => {
 window.onpopstate = event => {
 	console.log("opnpopstate seen")
 	console.log(event.state)
+	 //window.location.reload()
 }
 
 
@@ -448,6 +469,7 @@ document.querySelector('#q').addEventListener('keyup', function (e) {
 document.querySelector('#update').addEventListener('click', searchActions);
 document.querySelector('#providers').addEventListener('click', providerList);
 
+
 // --------  funcs and constants below here   ---------------------
 function searchActions() {
 	// let params = (new URL(location)).searchParams;
@@ -472,8 +494,12 @@ function blastsearchsimple(q, n, s) {
 	var data = query1(q, n, s);
 	console.log(data)
 
-	//fetch(`http://localhost:6789/api/v1/textindex/getnusearch?q=${data}`)
-	fetch(`http://192.168.2.50:6789/api/v1/textindex/getnusearch?q=${data}`)
+	// put up a search being done notification
+	const el = document.querySelector('#container2');
+	render(activesearch(), el)
+
+	// fetch(`http://geodex.org/api/v1/textindex/getnusearch?q=${data}`)
+	fetch(`https://geodex.org/api/v1/textindex/getnusearch?q=${data}`)
 		.then(function (response) {
 			return response.json();
 		})
@@ -511,7 +537,7 @@ function simpleSearch(q, n, s, i) {
 }
 
 function providerList() {
-	fetch('http://192.168.2.50:6789/api/v1/typeahead/providers')
+	fetch('http://geodex.org/api/v1/typeahead/providers')
 		.then(function (response) {
 			return response.json();
 		})
@@ -540,3 +566,4 @@ function updateURL() {
 	}
 	window.history.pushState({}, '', location.pathname + '?' + params);
 }
+

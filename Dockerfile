@@ -7,7 +7,7 @@ FROM scratch
 # Add in the static elements (could also mount these from local filesystem) later as the indexes grow
 ADD webui /
 ADD ./templates  /templates
-ADD ./static /static
+#ADD ./static /static
 #ADD ./uis /uis  
 #  NOTE.. content for /uis will be mounted in the compose file via datavolume
 # do this as a data mount now.. indexes are large
