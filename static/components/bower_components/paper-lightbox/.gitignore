@@ -1,6 +1,0 @@
-bower_components
-.DS_Store
-node_modules
-.scss-lint.yml
-coffeelint.json
-yarn.lock
