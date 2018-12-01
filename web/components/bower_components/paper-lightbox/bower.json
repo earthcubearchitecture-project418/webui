@@ -1,0 +1,30 @@
+{
+  "name": "paper-lightbox",
+  "version": "1.0.8",
+  "authors": [
+    "Óscar Solás <oscarsolas@gmail.com>"
+  ],
+  "description": "Polymer element to launch content inside a popup",
+  "main": [
+    "paper-lightbox.html"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Redbility/paper-lightbox",
+  "ignore": [
+    "bower_components",
+    "source"
+  ],
+  "keywords": [
+    "web-components",
+    "popup",
+    "lightbox",
+    "ajax"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#^v1.2.0",
+    "iron-icons": "PolymerElements/iron-icons#^1.0.0",
+    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^1.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.0.0",
+    "paper-button": "PolymerElements/paper-button#^1.0.0"
+  }
+}

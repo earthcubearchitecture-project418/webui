@@ -1,0 +1,93 @@
+{{define "Q"}}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" initial-scale="1.0">
+    <link rel="stylesheet " href="/css/grid2.css ">
+    <link rel="stylesheet " href="/css/grid.css ">
+    <link rel="stylesheet " href="/css/nav.css ">
+    <link rel="stylesheet " href="/css/pillbox.css ">
+    <link rel="stylesheet " href="/css/pillwrapper.css ">
+    <link rel="stylesheet " href="/css/leafletcustom.css ">
+
+
+    <!-- use hack font -->
+    <link rel='stylesheet' href='http://cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
+
+    <!-- icons and fonts for some icon use  (kinda heavy for just that)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- load the web components for P418 alpha -->
+    <script src="/components/leaflet-element/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/components/leaflet-element/bower_components/leaflet-map/leaflet-map.html">
+
+
+    <title>P418 Data Set</title>
+
+    <script type="appplication/ld+json">
+        {{.So}}
+    </script>
+
+</head>
+
+<body>
+    <div class="grid ">
+        <div class="title ">
+            <nav class="container">
+                <div class="m1">
+                    <a href="/" class="navLinks">Home</a>
+                </div>
+                <div class="m2">
+                    <a href="/about.html" class="navLinks">About</a>
+                </div>
+                <div class="m2plus">
+                    <a href="/data/catalog" class="navLinks">Data</a>
+                </div>
+                <div class="logo">
+                </div>
+                <div class="m3minus">
+                    <a target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs" class="navLinks">Docs</a>
+                </div>
+                <div class="m3">
+                    <a target="_blank" href="https://github.com/earthcubearchitecture-project418" class="navLinks">GitHub</a>
+                </div>
+                <div class="m4">
+                    <a target="_blank" href="/voc/" class="navLinks">Vocab</a>
+                </div>
+            </nav>
+        </div>
+        <div class="header ">
+
+            GeoDex Dataset Landing Page
+
+        </div>
+        <div class="sidebar ">
+
+            <p style="margin-top: 25px">
+                  <a href="{{.Dl}}">Data set download (format Frictionless Data Package)</a>
+            </p>
+
+
+            <p style="margin-top: 25px">
+                This page is completely generated from the content of the data package. It is very basic at this time but will evolve to
+                include license and other information pulled from the schema.org and presented as part of this landing page.
+            </p>
+
+        </div>
+        <div class="content ">
+
+         <pre>
+{{.Rm}}
+         </pre>
+
+        </div>
+        <div class="footer">
+            <small>Project 418 is funded by the National Science Foundation through the EarthCube Science Support Office (ESSO)</small>
+        </div>
+    </div>
+</body>
+
+</html>
+{{end}}

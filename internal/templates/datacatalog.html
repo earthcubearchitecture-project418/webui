@@ -1,0 +1,135 @@
+{{define "Q"}}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" initial-scale="1.0">
+    <link rel="stylesheet " href="/css/grid2.css ">
+    <link rel="stylesheet " href="/css/grid.css ">
+    <link rel="stylesheet " href="/css/nav.css ">
+    <link rel="stylesheet " href="/css/simplegrid.css ">
+
+
+
+    <!-- use hack font -->
+    <link rel='stylesheet' href='http://cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
+
+    <!-- icons and fonts for some icon use  (kinda heavy for just that)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- load the web components for P418 alpha -->
+    <script src="/components/leaflet-element/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/components/leaflet-element/bower_components/leaflet-map/leaflet-map.html">
+
+
+    <title>P418 Data Catalog</title>
+</head>
+
+<body>
+    <div class="grid ">
+        <div class="title ">
+            <nav class="container">
+                <div class="m1">
+                    <a href="/" class="navLinks">Home</a>
+                </div>
+                <div class="m2">
+                    <a href="/about.html" class="navLinks">About</a>
+                </div>
+                <div class="m2plus">
+                    <a href="/data/catalog" class="navLinks">Data</a>
+                </div>
+                <div class="logo">
+                </div>
+                <div class="m3minus">
+                    <a target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs" class="navLinks">Docs</a>
+                </div>
+                <div class="m3">
+                    <a target="_blank" href="https://github.com/earthcubearchitecture-project418" class="navLinks">GitHub</a>
+                </div>
+                <div class="m4">
+                    <a target="_blank" href="/voc/" class="navLinks">Vocab</a>
+                </div>
+            </nav>
+        </div>
+        <div class="header ">
+
+            GeoDex Data Catalog
+
+        </div>
+        <div class="sidebar ">
+                <div class="simplebox"> Spatial Data <br>
+                    <!-- <a style="text-decoration: none;"  href="/id/datapackage/p418spatial"> -->
+                        <img style="max-width:20%" src="/images/globegear.svg"> 
+                    <!-- </a> -->
+                </div>
+
+            <div class="simplebox"> Graph Data Set <br>
+                <!-- <a style="text-decoration: none;"   href="/id/datapackage/p418graph"> -->
+                    <img style="max-width:20%" src="/images/graph.svg"> 
+                <!-- </a> -->
+            </div>
+
+            <div class="simplebox"> Prov Data Set <br>
+                <!-- <a style="text-decoration: none;"    href="/id/datapackage/p418prov"> -->
+                    <img style="max-width:20%" src="/images/prov.svg">
+                <!-- </a> -->
+            </div>
+
+            <div class="simplebox"> Query Logs <br>
+                <!-- <a style="text-decoration: none;"  href="/id/datapackage/p418querylogs"> -->
+                    <img style="max-width:20%" src="/images/logs.svg"> 
+                <!-- </a> -->
+            </div>
+
+     
+
+        </div>
+        <div class="content ">
+
+            <p>
+              In the process of indexing a set of data sets are generated that may be of interest to others.  Those files
+              are listed and made available here.   
+            </p>
+
+            <p style="margin-top: 20px">
+                Data file types available:<br>
+                <ul style="margin-top: 20px">
+                    <li style="margin-top: 10px">
+                        The spatial index is a geohash based one.  The dataset here is an extraction of that to GeoJSON.
+                    </li>
+                    <li style="margin-top: 10px">
+                        The RDF graphs are the exact graphs loaded into the P418 triplestore
+                    </li>
+                    <li style="margin-top: 10px">
+                        The free text index is not available.  This is due to the fact it is rather larger and also uses
+                        a binary format readable by the Go Lang based Bleve package.  If, given this, a copy is desired, you 
+                        can get in touch with ESSO.
+                    </li>
+                    <li style="margin-top: 10px">
+                        The provence graph that is a rather simple provenance example that only records the 
+                        actions of the gleaner package.
+                    </li>
+                    <li style="margin-top: 10px">
+                        The query log graph is generated by the P418 web services.  It is a log of requests and responses.
+                    </li>
+                </ul>
+            </p>
+
+
+
+            <p style="margin-top: 40px">
+
+                   <a href="/datapackages/p418data.zip">Project 418 Data</a>
+            </p>
+
+
+        </div>
+        <div class="footer">
+            <small>Project 418 is funded by the National Science Foundation through the EarthCube Science Support Office (ESSO)</small>
+        </div>
+    </div>
+</body>
+
+</html>
+{{end}}

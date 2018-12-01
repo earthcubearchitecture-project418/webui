@@ -1,0 +1,56 @@
+{
+  "name": "p418graph",
+  "title": "Project 418 Graph Data from Data Facility Providers",
+  "licenses": [{
+    "id": "CC0-1.0",
+    "title": "CC0 1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+  }],
+  "resources": [{
+      "path": "metadata/schemaorg.json",
+      "format": "application/ld+json",
+      "name": "schemaorg"
+    },
+    {
+      "path": "README.md",
+      "format": "text/markdown",
+      "name": "readme"
+    },
+    {
+      "name": "bcodmograph",
+      "path": "data/bcodmo.nq",
+      "format": "nq",
+      "mediatype": "application/n-quads",
+      "encoding": "utf-8",
+      "licenses": [{
+        "id": "CC0-1.0",
+        "title": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }]
+    },
+    {
+      "name": "opencoregraph",
+      "path": "data/bcodmo.nq",
+      "format": "nq",
+      "mediatype": "application/n-quads",
+      "encoding": "utf-8",
+      "licenses": [{
+        "id": "CC0-1.0",
+        "title": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }]
+    },
+    {
+      "name": "opentopography",
+      "path": "data/opentopo.nq",
+      "format": "nq",
+      "mediatype": "application/n-quads",
+      "encoding": "utf-8",
+      "licenses": [{
+        "id": "CC0-1.0",
+        "title": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+var componentHeight = 30;
+var mainData = new MainData();
+var marker;
+var oldMarkers = [];
+var oldLines = [];
+var inputMap;
+var resultsMap;
+var currentLocation;
+var upper;
+var precision = 5;
+var indexesParentElement = "";
+var currentSpatialResultIndex = 0;
+var geoJSONLayer;
+var spatialSearchResultsViewInitialized = false;
+var textSearchResultsViewInitialized = false;
+var greenIcon;

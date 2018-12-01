@@ -1,0 +1,125 @@
+@CHARSET "UTF-8";
+
+#spatialSearchInputView{
+	width: 1000px;
+	margin: 0 auto; 
+}
+
+#spatialSearchInputMap{ 
+	margin-top: 20px;
+	width: 1000px; 
+	height: 500px; 
+	border: 1px solid #004A73;
+}
+
+.spatialSearchInputPanel{
+	display: grid;
+	margin-top: 20px;
+	grid-row-gap: 25px;
+	grid-template-columns: auto;
+	grid-template-rows: auto auto auto auto;
+}
+
+.spatialSearchInputPanel1{
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: 500px 500px;
+	grid-template-rows: 20px 20px 23px 30px;
+}
+
+.spatialSearchInputLatLabel{
+	margin-top: 10px;
+	font-size: 13px; 
+	font-family: Verdana; 
+	text-align: left;
+	grid-column-start: 1;
+  	grid-column-end: 2;
+  	grid-row-start: 1;
+  	grid-row-end: 2;
+}
+
+.spatialSearchInputLatField{
+	grid-column-start: 1;
+  	grid-column-end: 2;
+  	grid-row-start: 2;
+  	grid-row-end: 3;
+}
+
+.spatialSearchInputLonLabel{
+	margin-top: 10px;
+	font-size: 13px; 
+	font-family: Verdana; 
+	text-align: left;
+	grid-column-start: 1;
+  	grid-column-end: 2;
+  	grid-row-start: 3;
+  	grid-row-end: 4;
+}
+
+.spatialSearchInputLonField{
+	grid-column-start: 1;
+  	grid-column-end: 2;
+  	grid-row-start: 4;
+  	grid-row-end: 5;
+}
+
+.spatialSearchInputListLabel{
+	margin-top: 10px;
+	font-size: 13px; 
+	font-family: Verdana; 
+	text-align: left;
+	grid-column-start: 2;
+  	grid-column-end: 3;
+  	grid-row-start: 1;
+  	grid-row-end: 2;
+}
+
+.spatialSearchInputListBox{
+	grid-column-start: 2;
+  	grid-column-end: 3;
+  	grid-row-start: 2;
+  	grid-row-end: 5;
+}
+
+.spatialSearchInputPanel2{
+	display: grid;
+	grid-row-gap: 15px;
+	grid-column-gap: 5px;
+	grid-template-columns: 333px 333px 334px;
+	grid-template-rows: auto;
+}
+
+.spatialSearchInputUpdateButton{
+	grid-column-start: 1;
+  	grid-column-end: 2;
+  	grid-row-start: 1;
+  	grid-row-end: 2;		
+}
+
+.spatialSearchInputAddButton{
+	grid-column-start: 2;
+  	grid-column-end: 3;
+	grid-row-start: 1;
+  	grid-row-end: 2;	
+}
+
+.spatialSearchInputRemoveButton{
+	grid-column-start: 3;
+  	grid-column-end: 4;
+	grid-row-start: 1;
+  	grid-row-end: 2;	
+}
+
+.spatialSearchInputPanel3{
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto;
+}
+
+.spatialSearchInputSubmitButton{
+	grid-column-start: 1;
+  	grid-column-end: 2;
+	grid-row-start: 1;
+  	grid-row-end: 2;	
+  	justify-self: center;
+}

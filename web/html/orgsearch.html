@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Geodex Alpha3</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width" initial-scale="1.0">
+	<link rel="stylesheet " href="/css/grid3.css ">
+	<link rel="stylesheet " href="/css/nav.css ">
+	<link rel="stylesheet " href="/css/loader.css ">
+
+	<!-- open search -->
+	<link type="application/opensearchdescription+xml" rel="search" title="EarthCube P418 GeoDex" href="./opensearch.xml" />
+
+	<link rel="shortcut icon" href="/images/gd.png">
+
+
+
+
+	<script type="application/ld+json">
+		{
+			"@context": {
+				"@vocab": "http://schema.org/"
+			},
+			"@type": ["Service", "Organization"],
+			"legalName": "Project 418",
+			"name": "Project 418",
+			"url": "https://www.geodex.org",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "http://geodex.org/images/logos/eclogo.png"
+			},
+			"funder": {
+				"@type": "Organization",
+				"@id": "http://dx.doi.org/10.13039/100000001",
+				"legalName": "National Science Foundation",
+				"alternateName": "NSF",
+				"url": "http://www.nsf.gov",
+				"identifier": {
+					"@type": "PropertyValue",
+					"propertyID": "http://purl.org/spar/datacite/doi",
+					"value": "10.13039/100000001",
+					"url": "https://doi.org/10.13039/100000001"
+				}
+			},
+			"availableChannel": [{
+				"@type": "ServiceChannel",
+				"serviceUrl": "http://geodex.org/apidocs.json",
+				"name": "Swagger API Service",
+				"providesService": {
+					"@type": "Service",
+					"name": "API",
+					"description": "Search for organizations and datasets"
+				},
+				"subjectOf": {
+					"@type": "DigitalDocument",
+					"name": "Swagger Document",
+					"url": "http://geodex.org/apidocs.json"
+				}
+			}]
+		}
+	</script>
+
+
+	<!-- use google  font -->
+	<link href="//fonts.googleapis.com/css?family=Open Sans&subset=latin" rel="stylesheet" type="text/css">
+
+
+	<style>
+		input[type=number]::-webkit-inner-spin-button,
+		input[type=number]::-webkit-outer-spin-button {
+
+			opacity: 1;
+
+		}
+
+		.resultitem {
+			padding: 10px;
+			border: .5px solid #e6e5e5;
+			border-radius: 5px;
+		}
+
+		* {
+			font-family: 'Open Sans', sans-serif;
+		}
+
+		dl {
+			font: 1rem 'Fira Sans', sans-serif;
+			margin-top: 15px;
+		}
+
+		dl>dt {
+			margin-top: 10px;
+			font-weight: bold;
+			text-decoration: underline;
+		}
+	</style>
+
+
+
+	<script type="module" src="./js/orgsearch.js"></script>
+
+</head>
+
+<body>
+	<div class="grid ">
+		<div class="title ">
+			<nav class="container">
+				<div class="m1">
+					<a href="/" class="navLinks">Home</a>
+				</div>
+				<div class="m2">
+					<a href="/about.html" class="navLinks">About</a>
+				</div>
+				<div class="m2plus">
+					<a href="/data/catalog" class="navLinks">Data</a>
+				</div>
+				<div class="logo">
+				</div>
+				<div class="m3minus">
+					<a target="_blank" href="https://github.com/earthcubearchitecture-project418/p418Docs" class="navLinks">Docs</a>
+				</div>
+				<div class="m3">
+					<a target="_blank" href="https://github.com/earthcubearchitecture-project418" class="navLinks">GitHub</a>
+				</div>
+				<div class="m4">
+					<a target="_blank" href="/voc/" class="navLinks">Vocab</a>
+				</div>
+			</nav>
+		</div>
+		<div class="header">Geodex Organization Test Search</div>
+		<div class="lsidebar"> </div>
+		<div class="sidebar"> </div>
+		<div class="content">
+
+			<label>
+				<input type="text" size="45" id="q">
+			</label>
+			<button id="update">Search</button>
+			<input style="margin-top: 5px" id="nn" type="number" min="5" max="200" step="5" value="15" />
+			<div>
+				<input type="checkbox" id="dd" name="datadriven"
+					   value="datadriven"  />
+				<label for="dd">Data guided</label>
+			</div>
+			<!-- <button id="providers">View Providers</button> -->
+			<br/>
+			<label>
+				<input type="hidden" size="10" id="n">
+			</label>
+			<label>
+				<input type="hidden" size="10" value="0" id="s">
+			</label>
+			<label>
+				<input type="hidden" size="10" id="i">
+			</label>
+			<br/>
+
+
+			<div id="container1"></div>
+			<div id="container2">
+
+				<div style="margin-top:30px">
+					
+				</div>
+
+
+			</div>
+		</div>
+		<div class="footer ">
+			<small>Project 418 is funded by the National Science Foundation through the EarthCube Science Support Office (ESSO)</small>
+
+
+		</div>
+	</div>
+</body>
+
+</html>

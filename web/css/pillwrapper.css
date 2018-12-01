@@ -1,0 +1,37 @@
+ /*   * {box-sizing: border-box;} */
+
+ .pillwrapper {
+   width: 100%;
+   border-radius: 4px;
+ }
+
+ .pillwrapper>div {
+   border: 1px solid #ffa94d;
+   border-radius: 2px;
+   background-color: #ffd8a8;
+   color: #d9480f;
+ }
+
+ .pillwrapper {
+   display: grid;
+   grid-template-columns: repeat(10, 1fr);
+   grid-auto-rows: 1.5em;
+   grid-template-areas: "c c c c c c c  b  d d";
+   align-items: start;
+ }
+
+ .itemrank {
+   grid-area: a;
+ }
+
+ .itemscore {
+   grid-area: b;
+ }
+
+ .itemlink {
+   grid-area: c;
+ }
+
+ .itemdata {
+   grid-area: d;
+ }

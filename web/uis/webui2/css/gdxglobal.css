@@ -1,0 +1,62 @@
+.header{
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: 500px 500px;
+	grid-template-rows: auto;
+}
+
+.ec_logo{
+	background-image: url('../images/logo_earthcube_full_horizontal.png');
+	background-repeat: no-repeat;
+	height: 86px; 
+	width: 250px;
+	background-size: contain;
+	grid-column-start: 1;
+  	grid-column-end: 2;
+  	grid-row-start: 1;
+  	grid-row-end: 2;
+}
+
+.p418TextSearchInputLabel{
+	margin-top: 20px;
+	font-size: 24px; 
+	font-family: Verdana; 
+	text-align: right;
+	grid-column-start: 2;
+  	grid-column-end: 3;
+  	grid-row-start: 1;
+  	grid-row-end: 2;
+}
+
+.p418TextSearchResultsLabel{
+	margin-top: 20px;
+	font-size: 24px; 
+	font-family: Verdana; 
+	text-align: right;
+	grid-column-start: 2;
+  	grid-column-end: 3;
+  	grid-row-start: 1;
+  	grid-row-end: 2;
+}
+
+.p418SpatialSearchInputLabel{
+	margin-top: 20px;
+	font-size: 24px; 
+	font-family: Verdana; 
+	text-align: right;
+	grid-column-start: 2;
+  	grid-column-end: 3;
+  	grid-row-start: 1;
+  	grid-row-end: 2;
+}
+
+.p418SpatialSearchResultsLabel{
+	margin-top: 20px;
+	font-size: 24px; 
+	font-family: Verdana; 
+	text-align: right;
+	grid-column-start: 2;
+  	grid-column-end: 3;
+  	grid-row-start: 1;
+  	grid-row-end: 2;
+}

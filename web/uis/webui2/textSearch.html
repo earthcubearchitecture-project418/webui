@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	
+		<title>Geodex.org</title>
+		
+		<link rel="stylesheet" href="css/gdxtextsearchinputview.css" type="text/css" />
+		<link rel="stylesheet" href="css/gdxtextsearchresultsview.css" type="text/css" />
+		<link rel="stylesheet" href="css/gdxglobal.css" type="text/css" />
+		<link rel="stylesheet" href="js/jqwidgets/styles/jqx.base.css" type="text/css" />
+		<link rel="stylesheet" href="js/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+		
+		<script type="text/javascript" src="js/gdx/gdxdata.js"></script>
+		<script type="text/javascript" src="js/gdx/gdxglobal.js"></script>
+		<script type="text/javascript" src="js/gdx/gdxutils.js"></script>
+		<script type="text/javascript" src="js/gdx/gdxio.js"></script>
+		<script type="text/javascript" src="js/gdx/gdxui.js"></script>
+		<script type="text/javascript" src="js/gdx/gdxtextsearchinputview.js"></script>
+		<script type="text/javascript" src="js/gdx/gdxtextsearchresultsview.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="js/jqwidgets/jqxcore.js"></script>
+		<script type="text/javascript" src="js/jqwidgets/jqxbuttons.js"></script>
+		<script type="text/javascript" src="js/jqwidgets/jqxinput.js"></script>
+		<script type="text/javascript" src="js/jqwidgets/jqxcheckbox.js"></script>
+		<script type="text/javascript" src="js/jqwidgets/jqxwindow.js"></script>
+		<script type="text/javascript" src="js/jqwidgets/jqxscrollbar.js"></script>
+    		<script type="text/javascript" src="js/jqwidgets/jqxsplitter.js"></script>
+    		<script type="text/javascript" src="js/jqwidgets/jqxlistbox.js"></script>
+    		<script type="text/javascript" src="js/jqwidgets/jqxdata.js"></script>
+    		<script type="text/javascript" src="js/jqwidgets/jqxnumberinput.js"></script>
+    		<script type="text/javascript" src="js/jqwidgets/jqxradiobutton.js"></script>
+	
+	</head>
+
+	<body class='default' onload="initializeTextSearchInputView()">
+		
+		<div id='textSearchInputView'>
+		
+			<div class='header'>
+		
+				<div class='ec_logo'>
+				
+				</div>
+				
+				<div class='p418TextSearchInputLabel'>
+					Project 418 Text Search Input
+				</div>
+			
+			</div>
+		
+			<div class='textSearchInputPanel'>
+				
+				<div class='textSearchInputPanel1'>
+				
+					<div class='textSearchInputValueLabel'>
+						Enter Text Value:
+					</div>
+					
+					<div class='textSearchInputValueField'>
+						<input type="text" value="" id='textSearchInputValueField'/>
+					</div>
+					
+					<div class='textSearchInputNumberLabel'>
+						Select Max Number of Top Results:
+					</div>
+					
+					<div class='textSearchInputNumberInput'>
+						<input type="number" value="10" min="10" max="250" id='textSearchInputNumberInput' />
+					</div>
+				
+				</div>
+				
+				<div class='textSearchInputPanel2' id='textSearchInputPanel2'>
+				
+				</div>
+				
+				<div class='textSearchInputPanel3'>
+				
+					<div class='textSearchInputSetButton' id='textSearchInputSetButton' >
+
+					</div>
+					
+					<div class='textSearchInputSetLabel'>
+						Get Top Results For Each Selected Provider
+					</div>
+					
+					<div class='textSearchInputIndexButton' id='textSearchInputIndexButton' >
+
+					</div>
+					
+					<div class='textSearchInputIndexLabel'>
+						Get Top Results Across All Selected Providers
+					</div>
+				
+				</div>
+				
+				<div class='textSearchInputPanel4'>
+				
+					<div class='textSearchInputSubmitButton'>
+						<input type="button" value="Submit Text Search to Geodex.org" id='textSearchInputSubmitButton' />
+					</div>
+				
+				</div>
+			
+			</div>
+			
+			<div id='output'>
+				
+			</div>
+		
+		</div>
+		
+		<div id='textSearchResultsView'>
+		
+			<div class='header'>
+		
+				<div class='ec_logo'>
+				
+				</div>
+				
+				<div class='p418TextSearchResultsLabel'>
+					Project 418 Text Search Results
+				</div>
+			
+			</div>
+		
+			<div class='textSearchResultsPanel'>
+
+    				<div id='textSearchResultsSplitter'>
+			
+					<div class='textSearchResultsProviderListBox' id='textSearchResultsProviderListBox'>
+						
+					</div>
+					
+					<div class='textSearchResultsResultsListBox' id='textSearchResultsResultsListBox'>
+						
+					</div>
+				
+				</div>
+				
+				<div class='textSearchResultsResultsListBox2' id='textSearchResultsResultsListBox2'>
+					
+				</div>
+				
+				<div class='textSearchResultsBackButton'>
+					<input type="button" value="Modify Text Search at Geodex.org" id='textSearchResultsBackButton' />
+				</div>
+			
+			</div>
+		
+		</div>
+		
+		<div id='gdxWaitWindow'>
+				
+			<div style='margin: 10px; text-align: center;' id='gdxWaitWindowMessage'></div>
+			
+		</div>
+		
+	</body>
+</html>
